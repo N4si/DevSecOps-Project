@@ -8,6 +8,8 @@
   <p align="center">
     <a href="http://netflix-clone-with-tmdb-using-react-mui.vercel.app/">View Demo</a>
     ·
+    <a href="https://www.youtube.com/watch?v=eRL0r3GEDiw">YouTube</a>
+    ·
     <a href="https://github.com/endo-aki22/netflix-clone-with-tmdb-using-react-mui/issues">Report Bug</a>
     ·
     <a href="https://github.com/endo-aki22/netflix-clone-with-tmdb-using-react-mui/issues">Request Feature</a>
