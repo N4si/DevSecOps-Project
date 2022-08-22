@@ -100,7 +100,9 @@ export default function DetailModal({
               playing={playing}
               width="100%"
               height="100%"
-              url={`${YOUTUBE_URL}${detail?.videos.results[0].key}`}
+              url={`${YOUTUBE_URL}${
+                detail?.videos.results[0].key || "L3oOldViIgY"
+              }`}
               style={{ position: "absolute", top: 0 }}
             />
 

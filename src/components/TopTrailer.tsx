@@ -114,7 +114,9 @@ export default function TopTrailer({ mediaType }: TopTrailerProps) {
                   // not working
                   playerVars: { modestbranding: 1 },
                 }}
-                url={`${YOUTUBE_URL}${video.videos.results[0].key}`}
+                url={`${YOUTUBE_URL}${
+                  video.videos.results[0].key || "L3oOldViIgY"
+                }`}
               />
               <Box
                 sx={{
