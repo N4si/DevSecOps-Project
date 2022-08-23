@@ -39,9 +39,9 @@ export default function TopTrailer({ mediaType }: TopTrailerProps) {
   }, []);
 
   const handleReady = useCallback((player: ReactPlayer) => {
-    console.log("onReady: ", player);
     // player.getInternalPlayer().playVideo();
     if (playerRef.current) {
+      console.log("onReady: ", player);
       playerRef.current.getInternalPlayer().playVideo();
     }
   }, []);
@@ -127,13 +127,23 @@ export default function TopTrailer({ mediaType }: TopTrailerProps) {
                 muted={mute}
                 config={{
                   onUnstarted: () => {
-                    console.log("Unstarted: ");
+                    console.log("onUnstarted: ");
                     if (playerRef.current) {
+                      console.log("Unstarted: ");
                       playerRef.current.getInternalPlayer().playVideo();
                     }
                   },
                   // not working
-                  playerVars: { modestbranding: 1 },
+                  playerVars: {
+                    modestbranding: 1,
+                    controls: 0,
+                    iv_load_policy: 3,
+                  },
+                  embedOptions: {
+                    modestbranding: 1,
+                    controls: 0,
+                    iv_load_policy: 3,
+                  },
                 }}
                 url={`${YOUTUBE_URL}${
                   video.videos.results[0]?.key || "L3oOldViIgY"
