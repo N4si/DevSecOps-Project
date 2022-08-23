@@ -38,10 +38,6 @@ const StyledSlider = styled(Slider)(
         {
           transformOrigin: "0% 50% !important",
         },
-      // "& .slick-list > .slick-track > .slick-slide.slick-active:nth-of-type(6) > div > .MuiBox-root > .MuiPaper-root:hover":
-      //   {
-      //     transformOrigin: "0% 50% !important",
-      //   },
     },
     [theme.breakpoints.down("sm")]: {
       "& > .slick-list": {
@@ -144,15 +140,8 @@ export default function SlickSlider({ videos, genre }: SlickSliderProps) {
           <Stack
             direction="row"
             spacing={2}
-            sx={{ mb: 2 }}
+            sx={{ mb: 2, pl: { xs: "30px", sm: "60px" } }}
             alignItems="center"
-            onMouseOver={() => {
-              setShowExplore(true);
-            }}
-            onMouseLeave={() => {
-              console.log("Leave");
-              setShowExplore(false);
-            }}
           >
             <NetflixNavigationLink
               variant="h5"
@@ -161,8 +150,13 @@ export default function SlickSlider({ videos, genre }: SlickSliderProps) {
               }`}
               sx={{
                 display: "inline-block",
-                pl: { xs: "30px", sm: "60px" },
                 fontWeight: 700,
+              }}
+              onMouseOver={() => {
+                setShowExplore(true);
+              }}
+              onMouseLeave={() => {
+                setShowExplore(false);
               }}
             >
               {`${genre.name} Movies `}
@@ -178,24 +172,6 @@ export default function SlickSlider({ videos, genre }: SlickSliderProps) {
                 ))}
               </MotionContainer>
             </NetflixNavigationLink>
-            {/* <NetflixNavigationLink
-              variant="h6"
-              to={`/genre/${
-                genre.id || genre.name.toLowerCase().replace(" ", "_")
-              }`}
-              sx={{
-                color: "success.main",
-                fontWeight: 600,
-              }}
-            >
-              <MotionContainer open={showExplore} initial="initial">
-                {"Explore All".split("").map((letter, index) => (
-                  <motion.span key={index} variants={varFadeIn}>
-                    {letter}
-                  </motion.span>
-                ))}
-              </MotionContainer>
-            </NetflixNavigationLink> */}
           </Stack>
 
           <RootStyle>
