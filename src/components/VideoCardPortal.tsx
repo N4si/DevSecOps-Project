@@ -11,34 +11,34 @@ import AddIcon from "@mui/icons-material/Add";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Movie } from "types/Movie";
 import { useAppSelector } from "hooks/redux";
-import useMiniModalPortal from "hooks/useMiniModalPortal";
+import { usePortal } from "providers/PortalProvider";
+import { useDetailModal } from "providers/DetailModalProvider";
+import { formatMinuteToReadable, getRandomNumber } from "utils/common";
 import NetflixIconButton from "./NetflixIconButton";
 import MaxLineTypography from "./MaxLineTypography";
-import { formatMinuteToReadable, getRandomNumber } from "utils/common";
 import AgeLimitChip from "./AgeLimitChip";
 import QualityChip from "./QualityChip";
 import GenreBreadcrumbs from "./GenreBreadcrumbs";
-import useDetailModal from "hooks/useDetailModal";
 
-interface MiniMediaModalProps {
+interface VideoCardModalProps {
   video: Movie;
   anchorElement: HTMLElement;
 }
 
-export default function MiniMediaModal({
+export default function VideoCardModal({
   video,
   anchorElement,
-}: MiniMediaModalProps) {
+}: VideoCardModalProps) {
   const genres = useAppSelector((state) => state.genres.movie);
   const configuration = useAppSelector((state) => state.configuration);
-  const { setMiniModal } = useMiniModalPortal();
+  const { setPortal } = usePortal();
   const rect = anchorElement.getBoundingClientRect();
   const { setVideoId } = useDetailModal();
 
   return (
     <Card
       onMouseLeave={() => {
-        setMiniModal(null, null);
+        setPortal(null, null);
       }}
       sx={{
         width: rect.width * 1.5,

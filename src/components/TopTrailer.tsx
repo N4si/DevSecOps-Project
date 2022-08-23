@@ -20,7 +20,7 @@ import NetflixIconButton from "./NetflixIconButton";
 import MaturityRate from "./MaturityRate";
 import { YOUTUBE_URL } from "constant";
 import useOffSetTop from "hooks/useOffSetTop";
-import useDetailModal from "hooks/useDetailModal";
+import { useDetailModal } from "providers/DetailModalProvider";
 
 interface TopTrailerProps {
   mediaType: MEDIA_TYPE;

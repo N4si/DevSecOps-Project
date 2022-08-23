@@ -4,25 +4,13 @@ import Paper from "@mui/material/Paper";
 
 import { Movie } from "types/Movie";
 import { useAppSelector } from "hooks/redux";
-import useMiniModalPortal from "hooks/useMiniModalPortal";
+import { usePortal } from "providers/PortalProvider";
 
-const PaperStyle = styled(Paper)(({ theme }) => ({
-  borderRadius: "4px",
+const PaperStyle = styled(Paper)(() => ({
   zIndex: 9,
   cursor: "pointer",
+  borderRadius: "4px",
   position: "relative",
-  // transition: "transform .5s",
-  // [theme.breakpoints.up("sm")]: {
-  //   "&:hover": {
-  //     zIndex: 10,
-  //     msTransform: "scale(1.5, 3)",
-  //     WebkitTransform: "scale(1.5, 3)",
-  //     transform: "scale(1.5, 3)",
-  //   },
-  //   "&:hover .MuiBox-root": {
-  //     visibility: "visible",
-  //   },
-  // },
 }));
 
 interface VideoItemWithHoverProps {
@@ -31,10 +19,10 @@ interface VideoItemWithHoverProps {
 
 export default function VideoItemWithHover({ video }: VideoItemWithHoverProps) {
   const configuration = useAppSelector((state) => state.configuration);
-  const { setMiniModal, anchorElement } = useMiniModalPortal();
+  const { setPortal, anchorElement } = usePortal();
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setMiniModal(event.currentTarget, video);
+    setPortal(event.currentTarget, video);
   };
 
   const open = Boolean(anchorElement);

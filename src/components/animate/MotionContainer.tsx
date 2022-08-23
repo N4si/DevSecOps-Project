@@ -12,7 +12,6 @@ export default function MotionContainer({
   children,
   ...other
 }: MotionContainerProps) {
-  console.log("MotionContainer: ", open);
   return (
     <Box
       initial={false}

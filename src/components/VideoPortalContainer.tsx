@@ -2,17 +2,17 @@ import { useRef } from "react";
 import { motion } from "framer-motion";
 import Box from "@mui/material/Box";
 import Portal from "@mui/material/Portal";
-import useMiniModalPortal from "hooks/useMiniModalPortal";
-import MiniMediaModal from "./MiniMediaModal";
+import VideoCardPortal from "./VideoCardPortal";
 import MotionContainer from "./animate/MotionContainer";
 import {
   varZoomIn,
   varZoomInLeft,
   varZoomInRight,
 } from "./animate/variants/zoom/ZoomIn";
+import { usePortal } from "providers/PortalProvider";
 
-export default function MiniModalPortal() {
-  const { miniModalMediaData, anchorElement } = useMiniModalPortal();
+export default function VideoPortalContainer() {
+  const { miniModalMediaData, anchorElement } = usePortal();
   const container = useRef(null);
   const rect = anchorElement?.getBoundingClientRect();
 
@@ -39,7 +39,7 @@ export default function MiniModalPortal() {
     <>
       {miniModalMediaData && anchorElement !== null ? (
         <Portal container={container.current}>
-          <MiniMediaModal
+          <VideoCardPortal
             video={miniModalMediaData}
             anchorElement={anchorElement}
           />

@@ -1,26 +1,24 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Movie, MovieDetail, PaginatedResult } from "types/Movie";
 import { axiosInstance } from "utils/axios";
-import DetailModal from "components/DetailModal";
+import createSafeContext from "lib/createSafeContext";
 
-export type DeailModalContextState = {
-  setVideoId: Function;
-};
-
-const initialState: DeailModalContextState = {
-  setVideoId: (id: number | null) => {},
-};
-
-const DetailModalContext = createContext(initialState);
-
-interface DetailModalProviderProps {
-  children: ReactNode;
+export interface DetailModalConsumerProps {
+  detail: MovieDetail | null;
+  similarVideos: Movie[];
+  onClose: VoidFunction;
+  setVideoId: (id: number | null) => void;
 }
+
+export const [useDetailModal, Provider] =
+  createSafeContext<DetailModalConsumerProps>();
 
 export default function DetailModalProvider({
   children,
-}: DetailModalProviderProps) {
+}: {
+  children: ReactNode;
+}) {
   const [detailId, setDetailId] = useState<number | null>(null);
   const [detail, setDetail] = useState<MovieDetail | null>(null);
   const [similarVideos, setSimilarVideos] = useState<Movie[]>([]);
@@ -32,7 +30,7 @@ export default function DetailModalProvider({
     setSimilarVideos([]);
   };
 
-  const handleDetailId = (id: number | null) => {
+  const handleChangeVideoId = (id: number | null) => {
     setDetailId(id);
   };
 
@@ -58,20 +56,12 @@ export default function DetailModalProvider({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [detailId]);
 
-  return (
-    <DetailModalContext.Provider
-      value={{
-        setVideoId: handleDetailId,
-      }}
-    >
-      {children}
-      <DetailModal
-        detail={detail}
-        similarVideos={similarVideos}
-        onClose={handleClose}
-      />
-    </DetailModalContext.Provider>
-  );
-}
+  const providerValues: DetailModalConsumerProps = {
+    detail,
+    similarVideos,
+    onClose: handleClose,
+    setVideoId: handleChangeVideoId,
+  };
 
-export { DetailModalContext };
+  return <Provider value={providerValues}>{children}</Provider>;
+}

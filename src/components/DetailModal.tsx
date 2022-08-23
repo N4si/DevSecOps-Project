@@ -16,7 +16,7 @@ import AddIcon from "@mui/icons-material/Add";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import VolumeOffIcon from "@mui/icons-material/VolumeOff";
-import { Movie, MovieDetail } from "types/Movie";
+// import { Movie, MovieDetail } from "types/Movie";
 import { YOUTUBE_URL } from "constant";
 import MaxLineTypography from "./MaxLineTypography";
 import PlayButton from "./PlayButton";
@@ -25,6 +25,7 @@ import AgeLimitChip from "./AgeLimitChip";
 import QualityChip from "./QualityChip";
 import { formatMinuteToReadable, getRandomNumber } from "utils/common";
 import SimilarVideoCard from "./SimilarVideoCard";
+import { useDetailModal } from "providers/DetailModalProvider";
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -35,21 +36,15 @@ const Transition = forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-interface DetailModalProps {
-  detail: MovieDetail | null;
-  similarVideos: Movie[];
-  onClose: Function;
-}
+// interface DetailModalProps {
+//   detail: MovieDetail | null;
+//   similarVideos: Movie[];
+//   onClose: VoidFunction;
+// }
 
-export default function DetailModal({
-  detail,
-  similarVideos,
-  onClose,
-}: DetailModalProps) {
+export default function DetailModal() {
   const [mute, setMute] = useState(false);
-  const handleClose = () => {
-    onClose();
-  };
+  const { detail, similarVideos, onClose } = useDetailModal();
 
   return (
     <Dialog
@@ -118,7 +113,7 @@ export default function DetailModal({
               }}
             />
             <IconButton
-              onClick={handleClose}
+              onClick={onClose}
               sx={{
                 top: 15,
                 right: 15,
