@@ -30,7 +30,6 @@ interface TopTrailerProps {
 
 export default function TopTrailer({ mediaType }: TopTrailerProps) {
   const playerRef = useRef<YouTubePlayer>(null);
-  const [playing, setPlaying] = useState(true);
   const [mute, setMute] = useState(false);
   const [video, setVideo] = useState<MovieDetail | null>(null);
   const isOffset = useOffSetTop(window.innerWidth * 0.5625);
@@ -40,18 +39,20 @@ export default function TopTrailer({ mediaType }: TopTrailerProps) {
   }, []);
 
   const handleReady = useCallback((player: ReactPlayer) => {
-    console.log(
-      "HandleReady: ",
-      player.props,
-      player.getInternalPlayer().pauseVideo()
-    );
-    if (playerRef.current) {
-      console.log("PlayerRef: ", playerRef.current);
-    }
+    player.getInternalPlayer().playVideo();
+    // if (playerRef.current) {
+    //   playerRef.current.getInternalPlayer().playVideo()
+    // }
   }, []);
 
   useEffect(() => {
-    setPlaying(!isOffset);
+    if (playerRef.current) {
+      if (isOffset) {
+        playerRef.current.getInternalPlayer().pauseVideo();
+      } else {
+        playerRef.current.getInternalPlayer().playVideo();
+      }
+    }
   }, [isOffset]);
 
   useEffect(() => {
@@ -123,15 +124,13 @@ export default function TopTrailer({ mediaType }: TopTrailerProps) {
                 width="100%"
                 height="100%"
                 muted={mute}
-                playing={playing}
                 config={{
-                  // not working
                   onUnstarted: () => {
-                    console.log("Unstarted: ");
                     if (playerRef.current) {
-                      console.log("Player: ", playerRef.current);
+                      playerRef.current.getInternalPlayer().playVideo();
                     }
                   },
+                  // not working
                   playerVars: { modestbranding: 1 },
                 }}
                 url={`${YOUTUBE_URL}${
