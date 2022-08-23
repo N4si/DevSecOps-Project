@@ -137,7 +137,7 @@ const Header = () => {
           </Tooltip>
           <Menu
             sx={{ mt: "45px" }}
-            id="menu-appbar"
+            id="avatar-menu"
             anchorEl={anchorElUser}
             anchorOrigin={{
               vertical: "top",

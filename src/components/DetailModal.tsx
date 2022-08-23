@@ -48,6 +48,7 @@ export default function DetailModal() {
 
   return (
     <Dialog
+      id="detail_dialog"
       fullWidth
       scroll="body"
       maxWidth="md"
