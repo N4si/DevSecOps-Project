@@ -39,11 +39,11 @@ export default function TopTrailer({ mediaType }: TopTrailerProps) {
   }, []);
 
   const handleReady = useCallback((player: ReactPlayer) => {
-    // player.getInternalPlayer().playVideo();
-    if (playerRef.current) {
-      console.log("onReady: ", player);
-      playerRef.current.getInternalPlayer().playVideo();
-    }
+    // console.log("onReady: ", player);
+    player.getInternalPlayer().playVideo();
+    // if (playerRef.current) {
+    //   playerRef.current.getInternalPlayer().playVideo();
+    // }
   }, []);
 
   useEffect(() => {
@@ -127,21 +127,23 @@ export default function TopTrailer({ mediaType }: TopTrailerProps) {
                 muted={mute}
                 config={{
                   onUnstarted: () => {
-                    console.log("onUnstarted: ");
+                    // console.log("onUnstarted: ");
                     if (playerRef.current) {
-                      console.log("Unstarted: ");
+                      // console.log("Unstarted: ");
                       playerRef.current.getInternalPlayer().playVideo();
                     }
                   },
                   // not working
                   playerVars: {
-                    modestbranding: 1,
                     controls: 0,
+                    autoplay: 1,
+                    modestbranding: 1,
                     iv_load_policy: 3,
                   },
                   embedOptions: {
-                    modestbranding: 1,
                     controls: 0,
+                    autoplay: 1,
+                    modestbranding: 1,
                     iv_load_policy: 3,
                   },
                 }}
