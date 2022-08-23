@@ -39,10 +39,11 @@ export default function TopTrailer({ mediaType }: TopTrailerProps) {
   }, []);
 
   const handleReady = useCallback((player: ReactPlayer) => {
-    player.getInternalPlayer().playVideo();
-    // if (playerRef.current) {
-    //   playerRef.current.getInternalPlayer().playVideo()
-    // }
+    console.log("onReady: ", player);
+    // player.getInternalPlayer().playVideo();
+    if (playerRef.current) {
+      playerRef.current.getInternalPlayer().playVideo();
+    }
   }, []);
 
   useEffect(() => {
@@ -126,6 +127,7 @@ export default function TopTrailer({ mediaType }: TopTrailerProps) {
                 muted={mute}
                 config={{
                   onUnstarted: () => {
+                    console.log("Unstarted: ");
                     if (playerRef.current) {
                       playerRef.current.getInternalPlayer().playVideo();
                     }
