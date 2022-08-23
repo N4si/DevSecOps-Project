@@ -1,7 +1,6 @@
 import { forwardRef, useState } from "react";
 import ReactPlayer from "react-player/youtube";
 
-// import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
@@ -27,21 +26,6 @@ import QualityChip from "./QualityChip";
 import { formatMinuteToReadable, getRandomNumber } from "utils/common";
 import SimilarVideoCard from "./SimilarVideoCard";
 
-// const DialogStyle = styled(Dialog)(({ theme }) => ({
-//   [theme.breakpoints.down("sm")]: {
-//     "& > .MuiDialog-container > .MuiPaper-root": {
-//       // width: "calc(100% - 15px)",
-//       // maxWidth: "calc(100% - 15px)",
-//       width: "100%",
-//       maxWidth: "100%",
-//       marginBottom: 0,
-//       marginLeft: 0,
-//       marginRight: 0,
-//       marginTop: 64,
-//     },
-//   },
-// }));
-
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement<any, any>;
@@ -62,7 +46,6 @@ export default function DetailModal({
   similarVideos,
   onClose,
 }: DetailModalProps) {
-  const [playing, setPlaying] = useState(true);
   const [mute, setMute] = useState(false);
   const handleClose = () => {
     onClose();
@@ -97,7 +80,7 @@ export default function DetailModal({
             <ReactPlayer
               loop
               muted={mute}
-              playing={playing}
+              playing={true}
               width="100%"
               height="100%"
               url={`${YOUTUBE_URL}${

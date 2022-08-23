@@ -138,10 +138,10 @@ export default function SlickSlider({ videos, genre }: SlickSliderProps) {
       {videos.length && (
         <>
           <Stack
-            direction="row"
             spacing={2}
-            sx={{ mb: 2, pl: { xs: "30px", sm: "60px" } }}
+            direction="row"
             alignItems="center"
+            sx={{ mb: 2, pl: { xs: "30px", sm: "60px" } }}
           >
             <NetflixNavigationLink
               variant="h5"
