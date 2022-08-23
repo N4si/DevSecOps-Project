@@ -1,5 +1,7 @@
-import { useEffect, useState, useMemo } from "react";
-import ReactPlayer from "react-player/youtube";
+import { useEffect, useState, useMemo, useCallback } from "react";
+import ReactPlayer from "react-player";
+import YouTubePlayer from "react-player/youtube";
+
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
@@ -27,15 +29,18 @@ interface TopTrailerProps {
 }
 
 export default function TopTrailer({ mediaType }: TopTrailerProps) {
-  // const configuration = useAppSelector((state) => state.configuration);
   const [playing, setPlaying] = useState(true);
   const [mute, setMute] = useState(false);
-  const isOffset = useOffSetTop(window.innerWidth * 0.5625);
   const [video, setVideo] = useState<MovieDetail | null>(null);
+  const isOffset = useOffSetTop(window.innerWidth * 0.5625);
+  const { setVideoId } = useDetailModal();
   const maturityRate = useMemo(() => {
     return getRandomNumber(20);
   }, []);
-  const { setVideoId } = useDetailModal();
+
+  const handleReady = useCallback((player: ReactPlayer) => {
+    console.log("HandleReady: ", player.props, player.getInternalPlayer());
+  }, []);
 
   useEffect(() => {
     setPlaying(!isOffset);
@@ -104,7 +109,7 @@ export default function TopTrailer({ mediaType }: TopTrailerProps) {
                   backgroundPosition: "50%",
                 }}
               /> */}
-              <ReactPlayer
+              <YouTubePlayer
                 loop
                 width="100%"
                 height="100%"
@@ -112,11 +117,15 @@ export default function TopTrailer({ mediaType }: TopTrailerProps) {
                 playing={playing}
                 config={{
                   // not working
+                  onUnstarted: () => {
+                    console.log("Unstarted");
+                  },
                   playerVars: { modestbranding: 1 },
                 }}
                 url={`${YOUTUBE_URL}${
                   video.videos.results[0].key || "L3oOldViIgY"
                 }`}
+                onReady={handleReady}
               />
               <Box
                 sx={{
