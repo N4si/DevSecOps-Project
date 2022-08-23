@@ -75,7 +75,7 @@
 
 ## Contact
 
-- pydjangodev@outlook.com
+- endo_aki22@outlook.com
 - [Linkedin](https://www.linkedin.com/in/endo-aki-63b8791a6/)
 
 > **Note**
