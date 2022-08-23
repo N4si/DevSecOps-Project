@@ -3,7 +3,6 @@ import { useRoutes, Navigate } from "react-router-dom";
 
 import MainLayout from "layouts/MainLayout";
 import { MAIN_PATH } from "./paths";
-import GenreExplore from "pages/GenreExplore";
 
 const Loadable = (Component: ElementType) => (props: any) => {
   return (
@@ -24,10 +23,11 @@ export default function MainRoutes() {
     {
       path: MAIN_PATH.genreExplore,
       element: <MainLayout />,
-      children: [{ path: ":genreId", element: <GenreExplore /> }],
+      children: [{ path: ":genreId", element: <GenreExplorePage /> }],
     },
   ]);
   return routes;
 }
 
 const HomePage = Loadable(lazy(() => import("pages/HomePage")));
+const GenreExplorePage = Loadable(lazy(() => import("pages/GenreExplore")));
