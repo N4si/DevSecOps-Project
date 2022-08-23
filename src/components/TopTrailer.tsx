@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import ReactPlayer from "react-player";
 import YouTubePlayer from "react-player/youtube";
 
@@ -29,6 +29,7 @@ interface TopTrailerProps {
 }
 
 export default function TopTrailer({ mediaType }: TopTrailerProps) {
+  const playerRef = useRef<YouTubePlayer>(null);
   const [playing, setPlaying] = useState(true);
   const [mute, setMute] = useState(false);
   const [video, setVideo] = useState<MovieDetail | null>(null);
@@ -39,7 +40,14 @@ export default function TopTrailer({ mediaType }: TopTrailerProps) {
   }, []);
 
   const handleReady = useCallback((player: ReactPlayer) => {
-    console.log("HandleReady: ", player.props, player.getInternalPlayer());
+    console.log(
+      "HandleReady: ",
+      player.props,
+      player.getInternalPlayer().pauseVideo()
+    );
+    if (playerRef.current) {
+      console.log("PlayerRef: ", playerRef.current);
+    }
   }, []);
 
   useEffect(() => {
@@ -111,6 +119,7 @@ export default function TopTrailer({ mediaType }: TopTrailerProps) {
               /> */}
               <YouTubePlayer
                 loop
+                ref={playerRef}
                 width="100%"
                 height="100%"
                 muted={mute}
@@ -118,12 +127,15 @@ export default function TopTrailer({ mediaType }: TopTrailerProps) {
                 config={{
                   // not working
                   onUnstarted: () => {
-                    console.log("Unstarted");
+                    console.log("Unstarted: ");
+                    if (playerRef.current) {
+                      console.log("Player: ", playerRef.current);
+                    }
                   },
                   playerVars: { modestbranding: 1 },
                 }}
                 url={`${YOUTUBE_URL}${
-                  video.videos.results[0].key || "L3oOldViIgY"
+                  video.videos.results[0]?.key || "L3oOldViIgY"
                 }`}
                 onReady={handleReady}
               />
