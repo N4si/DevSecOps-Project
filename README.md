@@ -63,7 +63,7 @@
 - How to create and use [HOC](https://reactjs.org/docs/higher-order-components.html)
 - How to customize default theme of [MUI](https://mui.com/)
 - How to use [RTK](https://redux-toolkit.js.org/introduction/getting-started)
-- How to customize default classname of MUI.
+- How to customize default classname of [MUI](https://mui.com/material-ui/experimental-api/classname-generator).
 - Infinite Scrolling(using [react-infinite-scroller](https://www.npmjs.com/package/react-infinite-scroller))
 - How to make awesome carousel using [slick-carousel](https://react-slick.neostack.com)
 
