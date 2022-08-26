@@ -64,6 +64,7 @@
 - How to customize default theme of [MUI](https://mui.com/)
 - How to use [RTK](https://redux-toolkit.js.org/introduction/getting-started)
 - How to customize default classname of MUI.
+- Infinite Scrolling(using [react-infinite-scroller](https://www.npmjs.com/package/react-infinite-scroller))
 
 ## Third Party libraries used except for React and RTK
 
