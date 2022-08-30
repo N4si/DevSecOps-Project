@@ -188,8 +188,8 @@ export default function SlickSlider({ videos, genre }: SlickSliderProps) {
                 padding={ARROW_MAX_WIDTH}
                 theme={theme}
               >
-                {videos.map((item, idx) => (
-                  <SlideItem key={idx} item={item} />
+                {videos.map((item) => (
+                  <SlideItem key={item.id} item={item} />
                 ))}
               </StyledSlider>
             </CustomNavigation>
