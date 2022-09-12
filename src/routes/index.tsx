@@ -16,14 +16,18 @@ export default function MainRoutes() {
   let routes = useRoutes([
     { path: "", element: <Navigate to={MAIN_PATH.browse} replace /> },
     {
-      path: MAIN_PATH.browse,
+      path: "",
       element: <MainLayout />,
-      children: [{ path: "", element: <HomePage /> }],
-    },
-    {
-      path: MAIN_PATH.genreExplore,
-      element: <MainLayout />,
-      children: [{ path: ":genreId", element: <GenreExplorePage /> }],
+      children: [
+        {
+          path: MAIN_PATH.browse,
+          children: [{ path: "", element: <HomePage /> }],
+        },
+        {
+          path: MAIN_PATH.genreExplore,
+          children: [{ path: ":genreId", element: <GenreExplorePage /> }],
+        },
+      ],
     },
   ]);
   return routes;
