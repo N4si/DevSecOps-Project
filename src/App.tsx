@@ -7,7 +7,7 @@ function App() {
       sx={{
         width: "100%",
         height: "100vh",
-        bgcolor: "primary.main",
+        bgcolor: "background.default",
         position: "relative",
       }}
     >
