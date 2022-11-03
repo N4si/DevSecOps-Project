@@ -84,6 +84,11 @@ docker build --build-arg TMDB_V3_API_KEY=your_api_key_here -t netflix-clone .
 docker run --name netflix-clone-website --rm -d -p 80:80 netflix-clone
 ```
 
+## Todo
+
+- Implement animation using motion hook from `react-use`, now I am using `framer-motion` for animation. If we use the motion hook from `react-use`, `framer-motion` is not needed.
+- Improve performance. I am using `context` and `provider` but all components subscribed to the context's value are re-rendered. These re-renders happen even if the part of the value is not used in render of the component. there are [several ways](https://blog.axlight.com/posts/4-options-to-prevent-extra-rerenders-with-react-context/) to prevent the re-renders from these behaviours.
+
 ## Contact
 
 - endo_aki22@outlook.com
