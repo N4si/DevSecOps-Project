@@ -1,6 +1,6 @@
-import { ReactNode, useState } from "react";
-import { Movie } from "types/Movie";
-import createSafeContext from "lib/createSafeContext";
+import { ReactNode, useState, useCallback } from "react";
+import { Movie } from "src/types/Movie";
+import createSafeContext from "src/lib/createSafeContext";
 
 export interface PortalConsumerProps {
   anchorElement: HTMLElement | null;
@@ -16,19 +16,23 @@ export default function PortalProvider({ children }: { children: ReactNode }) {
     null
   );
 
-  const handleChangePortal = (
-    anchor: HTMLElement | null,
-    video: Movie | null
-  ) => {
-    setAnchorElement(anchor);
-    setMiniModalMediaData(video);
-  };
+  const handleChangePortal = useCallback(
+    (anchor: HTMLElement | null, video: Movie | null) => {
+      setAnchorElement(anchor);
+      setMiniModalMediaData(video);
+    },
+    []
+  );
 
-  const providerValues: PortalConsumerProps = {
-    anchorElement,
-    miniModalMediaData,
-    setPortal: handleChangePortal,
-  };
-
-  return <Provider value={providerValues}>{children}</Provider>;
+  return (
+    <Provider
+      value={{
+        anchorElement,
+        miniModalMediaData,
+        setPortal: handleChangePortal,
+      }}
+    >
+      {children}
+    </Provider>
+  );
 }

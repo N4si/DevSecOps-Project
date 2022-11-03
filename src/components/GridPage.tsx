@@ -1,13 +1,14 @@
-import withInfiniteScroll from "hoc/withInfiniteScroll";
-import { Genre, MEDIA_TYPE, CommonTitle } from "types/Movie";
+import withPagination from "src/hoc/withPagination";
+import { MEDIA_TYPE } from "src/types/Common";
+import { CustomGenre, Genre } from "src/types/Genre";
 import GridWithInfiniteScroll from "./GridWithInfiniteScroll";
 
 interface GridPageProps {
-  genre: Genre | CommonTitle;
+  genre: Genre | CustomGenre;
   mediaType: MEDIA_TYPE;
 }
 export default function GridPage({ genre, mediaType }: GridPageProps) {
-  const Component = withInfiniteScroll(
+  const Component = withPagination(
     GridWithInfiniteScroll,
     mediaType,
     genre

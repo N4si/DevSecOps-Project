@@ -1,43 +1,19 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type { GenreType } from "types/Genre";
-import { MEDIA_TYPE } from "types/Movie";
-import { axiosInstance } from "utils/axios";
+import { TMDB_V3_API_KEY } from "src/constant";
+import { Genre } from "src/types/Genre";
+import { tmdbApi } from "./apiSlice";
 
-// Define a type for the slice state
-interface GenreState {
-  movie: GenreType[];
-  tv: GenreType[];
-}
-
-interface CustomGenresResult {
-  result: GenreType[];
-  mediaType: MEDIA_TYPE;
-}
-
-// Define the initial state using that type
-const initialState: GenreState = { movie: [], tv: [] };
-
-export const genreSlice = createSlice({
-  name: "genre",
-  initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(
-      getGenres.fulfilled,
-      (state: GenreState, { payload }: { payload: CustomGenresResult }) => {
-        state[payload.mediaType] = payload.result;
-      }
-    );
-    builder.addCase(getGenres.rejected, (state: GenreState, action) => {});
-  },
+const extendedApi = tmdbApi.injectEndpoints({
+  endpoints: (build) => ({
+    getGenres: build.query<Genre[], string>({
+      query: (mediaType) => ({
+        url: `/genre/${mediaType}/list`,
+        params: { api_key: TMDB_V3_API_KEY },
+      }),
+      transformResponse: (response: { genres: Genre[] }) => {
+        return response.genres;
+      },
+    }),
+  }),
 });
 
-export const getGenres = createAsyncThunk<
-  CustomGenresResult,
-  { mediaType: MEDIA_TYPE }
->("/genre", async ({ mediaType }) => {
-  const response = await axiosInstance.get(`/genre/${mediaType}/list`);
-  return { result: response.data.genres, mediaType };
-});
-
-export default genreSlice.reducer;
+export const { useGetGenresQuery } = extendedApi;

@@ -1,11 +1,11 @@
 // import { ReactNode } from "react";
 import Header from "../components/Header";
 import { Outlet } from "react-router-dom";
-import Footer from "components/Footer";
-import DetailModal from "components/DetailModal";
-import VideoPortalContainer from "components/VideoPortalContainer";
-import DetailModalProvider from "providers/DetailModalProvider";
-import PortalProvider from "providers/PortalProvider";
+import Footer from "src/components/Footer";
+import DetailModal from "src/components/DetailModal";
+import VideoPortalContainer from "src/components/VideoPortalContainer";
+import DetailModalProvider from "src/providers/DetailModalProvider";
+import PortalProvider from "src/providers/PortalProvider";
 
 // type MainLayoutProps = {
 //   children: ReactNode;

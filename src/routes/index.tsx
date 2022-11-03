@@ -1,12 +1,13 @@
 import { ElementType, lazy, Suspense } from "react";
 import { useRoutes, Navigate } from "react-router-dom";
+import MainLoadingScreen from "src/components/MainLoadingScreen";
 
-import MainLayout from "layouts/MainLayout";
+import MainLayout from "src/layouts/MainLayout";
 import { MAIN_PATH } from "./paths";
 
 const Loadable = (Component: ElementType) => (props: any) => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<MainLoadingScreen />}>
       <Component {...props} />
     </Suspense>
   );
@@ -33,5 +34,5 @@ export default function MainRoutes() {
   return routes;
 }
 
-const HomePage = Loadable(lazy(() => import("pages/HomePage")));
-const GenreExplorePage = Loadable(lazy(() => import("pages/GenreExplore")));
+const HomePage = Loadable(lazy(() => import("src/pages/HomePage")));
+const GenreExplorePage = Loadable(lazy(() => import("src/pages/GenreExplore")));

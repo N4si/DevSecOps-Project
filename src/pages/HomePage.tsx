@@ -1,31 +1,25 @@
-import { useEffect } from "react";
 import Stack from "@mui/material/Stack";
-import useGenres from "hooks/useGenres";
-import { useAppDispatch, useAppSelector } from "hooks/redux";
-import { getConfiguration } from "store/slices/configuration";
-import { CommonTitle, MEDIA_TYPE } from "types/Movie";
-import { COMMON_TITLES } from "constant";
-import { GenreType } from "types/Genre";
-import TopTrailer from "components/TopTrailer";
-import SliderRowForGenre from "components/VideoSlider";
+import { COMMON_TITLES } from "src/constant";
+import TopTrailer from "src/components/TopTrailer";
+import { useGetGenresQuery } from "src/store/slices/genre";
+import { MEDIA_TYPE } from "src/types/Common";
+import { CustomGenre, Genre } from "src/types/Genre";
+import SliderRowForGenre from "src/components/VideoSlider";
+import MainLoadingScreen from "src/components/MainLoadingScreen";
 
 function HomePage() {
-  const [genres] = useGenres(MEDIA_TYPE.Movie);
-  const configuration = useAppSelector((state) => state.configuration);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (!configuration.images) {
-      dispatch(getConfiguration());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  if (genres.length) {
+  const {
+    data: genres,
+    isLoading,
+    isSuccess,
+  } = useGetGenresQuery(MEDIA_TYPE.Movie);
+  if (isLoading) {
+    return <div style={{ color: "white" }}><MainLoadingScreen /></div>;
+  } else if (isSuccess && genres && genres.length > 0) {
     return (
       <Stack spacing={2} sx={{ bgcolor: "background.default" }}>
         <TopTrailer mediaType={MEDIA_TYPE.Movie} />
-        {[...COMMON_TITLES, ...genres].map((genre: GenreType | CommonTitle) => (
+        {[...COMMON_TITLES, ...genres].map((genre: Genre | CustomGenre) => (
           <SliderRowForGenre
             key={genre.id || genre.name}
             genre={genre}
@@ -35,7 +29,7 @@ function HomePage() {
       </Stack>
     );
   }
-  return null;
+  return <div>Something went wrong</div>;
 }
 
 export default HomePage;

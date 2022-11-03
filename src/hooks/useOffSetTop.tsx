@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 export default function useOffSetTop(top: number) {
   const [offsetTop, setOffSetTop] = useState(false);
+
   useEffect(() => {
     window.onscroll = () => {
       if (window.pageYOffset > top) {

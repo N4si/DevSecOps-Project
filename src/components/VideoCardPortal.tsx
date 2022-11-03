@@ -9,16 +9,18 @@ import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import AddIcon from "@mui/icons-material/Add";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Movie } from "types/Movie";
-import { useAppSelector } from "hooks/redux";
-import { usePortal } from "providers/PortalProvider";
-import { useDetailModal } from "providers/DetailModalProvider";
-import { formatMinuteToReadable, getRandomNumber } from "utils/common";
+import { Movie } from "src/types/Movie";
+import { usePortal } from "src/providers/PortalProvider";
+import { useDetailModal } from "src/providers/DetailModalProvider";
+import { formatMinuteToReadable, getRandomNumber } from "src/utils/common";
 import NetflixIconButton from "./NetflixIconButton";
 import MaxLineTypography from "./MaxLineTypography";
 import AgeLimitChip from "./AgeLimitChip";
 import QualityChip from "./QualityChip";
 import GenreBreadcrumbs from "./GenreBreadcrumbs";
+import { useGetConfigurationQuery } from "src/store/slices/configuration";
+import { MEDIA_TYPE } from "src/types/Common";
+import { useGetGenresQuery } from "src/store/slices/genre";
 
 interface VideoCardModalProps {
   video: Movie;
@@ -29,11 +31,11 @@ export default function VideoCardModal({
   video,
   anchorElement,
 }: VideoCardModalProps) {
-  const genres = useAppSelector((state) => state.genres.movie);
-  const configuration = useAppSelector((state) => state.configuration);
+  const { data: configuration } = useGetConfigurationQuery(undefined);
+  const { data: genres } = useGetGenresQuery(MEDIA_TYPE.Movie);
   const { setPortal } = usePortal();
   const rect = anchorElement.getBoundingClientRect();
-  const { setVideoId } = useDetailModal();
+  const { setDetailType } = useDetailModal();
 
   return (
     <Card
@@ -55,7 +57,7 @@ export default function VideoCardModal({
       >
         <Box
           component="img"
-          src={`${configuration.images?.base_url}w780${video.backdrop_path}`}
+          src={`${configuration?.images.base_url}w780${video.backdrop_path}`}
           sx={{
             top: 0,
             height: "100%",
@@ -115,7 +117,7 @@ export default function VideoCardModal({
             <NetflixIconButton
               size="large"
               onClick={() => {
-                setVideoId(video.id);
+                setDetailType({ mediaType: MEDIA_TYPE.Movie, id: video.id });
               }}
             >
               <ExpandMoreIcon />
@@ -132,11 +134,13 @@ export default function VideoCardModal({
             )}`}</Typography>
             <QualityChip label="HD" />
           </Stack>
-          <GenreBreadcrumbs
-            genres={genres
-              .filter((genre) => video.genre_ids.includes(genre.id))
-              .map((genre) => genre.name)}
-          />
+          {genres && (
+            <GenreBreadcrumbs
+              genres={genres
+                .filter((genre) => video.genre_ids.includes(genre.id))
+                .map((genre) => genre.name)}
+            />
+          )}
         </Stack>
       </CardContent>
     </Card>

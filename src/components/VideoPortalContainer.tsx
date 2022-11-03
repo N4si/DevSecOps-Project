@@ -9,7 +9,7 @@ import {
   varZoomInLeft,
   varZoomInRight,
 } from "./animate/variants/zoom/ZoomIn";
-import { usePortal } from "providers/PortalProvider";
+import { usePortal } from "src/providers/PortalProvider";
 
 export default function VideoPortalContainer() {
   const { miniModalMediaData, anchorElement } = usePortal();

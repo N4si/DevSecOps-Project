@@ -4,19 +4,19 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
-import { Movie } from "types/Movie";
-import { useAppSelector } from "hooks/redux";
+import { Movie } from "src/types/Movie";
 import NetflixIconButton from "./NetflixIconButton";
 import MaxLineTypography from "./MaxLineTypography";
-import { formatMinuteToReadable, getRandomNumber } from "utils/common";
+import { formatMinuteToReadable, getRandomNumber } from "src/utils/common";
 import AgeLimitChip from "./AgeLimitChip";
+import { useGetConfigurationQuery } from "src/store/slices/configuration";
 
 interface SimilarVideoCardProps {
   video: Movie;
 }
 
 export default function SimilarVideoCard({ video }: SimilarVideoCardProps) {
-  const configuration = useAppSelector((state) => state.configuration);
+  const { data: configuration } = useGetConfigurationQuery(undefined);
 
   return (
     <Card>
@@ -29,7 +29,7 @@ export default function SimilarVideoCard({ video }: SimilarVideoCardProps) {
       >
         <Box
           component="img"
-          src={`${configuration.images?.base_url}w780${video.backdrop_path}`}
+          src={`${configuration?.images.base_url}w780${video.backdrop_path}`}
           sx={{
             top: 0,
             height: "100%",

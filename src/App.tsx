@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import MainRoutes from "routes";
+import MainRoutes from "src/routes";
 
 function App() {
   return (

@@ -50,7 +50,7 @@
 - Create an account if you don't have on [TMDB](https://www.themoviedb.org/).
   Because I use its free API to consume movie/tv data.
 - And then follow the [documentation](https://developers.themoviedb.org/3/getting-started/introduction) to create API Key
-- Finally, if you use v3 of TMDB API, create a file named `.env.local`, and copy and paste the content of `.env.example`.
+- Finally, if you use v3 of TMDB API, create a file named `.env`, and copy and paste the content of `.env.example`.
   And then paste the API Key you just created.
 
 ## Which features this project deal with
@@ -63,8 +63,9 @@
 - How to create and use [HOC](https://reactjs.org/docs/higher-order-components.html)
 - How to customize default theme of [MUI](https://mui.com/)
 - How to use [RTK](https://redux-toolkit.js.org/introduction/getting-started)
+- How to use [RTK Query](https://redux-toolkit.js.org/rtk-query/overview)
 - How to customize default classname of [MUI](https://mui.com/material-ui/experimental-api/classname-generator).
-- Infinite Scrolling(using [react-infinite-scroller](https://www.npmjs.com/package/react-infinite-scroller))
+- Infinite Scrolling(using [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API))
 - How to make awesome carousel using [slick-carousel](https://react-slick.neostack.com)
 
 ## Third Party libraries used except for React and RTK
@@ -72,9 +73,8 @@
 - [MUI(Material UI)](https://mui.com/)
 - [framer-motion](https://www.framer.com/docs/)
 - [react-player](https://github.com/CookPete/react-player)
-- [react-infinite-scroller](https://github.com/danbovey/react-infinite-scroller)
+- [react-use](https://github.com/streamich/react-use)
 - [react-slick](https://react-slick.neostack.com/)
-- [use-immer](https://github.com/immerjs/use-immer)
 
 ## Install with Docker
 
@@ -90,9 +90,10 @@ docker run --name netflix-clone-website --rm -d -p 80:80 netflix-clone
 - [Linkedin](https://www.linkedin.com/in/endo-aki-63b8791a6/)
 
 > **Note**
-> There might be several things to improve.
-> Because this project aims to show how to use the features mentioned above.
+> There might be several things to improve for performance.
+> Because this project only aims to show how to use the features mentioned above.
 > So I welcome anyone who wants to contribute.
+> If there are anyone who wants to contribute, there are some points(animation using `react-use`, not `framer-motion`, and fix position of the portal in Grid page)
 
 ## A Similar and More Complex project
 

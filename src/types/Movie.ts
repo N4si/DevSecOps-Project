@@ -1,26 +1,6 @@
-export type Genre = {
-  id: number;
-  name: string;
-};
-export type Company = {
-  description: string;
-  headquarters: string;
-  homepage: string;
-  id: number;
-  logo_path: string;
-  name: string;
-  origin_country: string;
-  parent_company: null | object;
-};
-export type Country = {
-  iso_3166_1: string;
-  english_name: string;
-};
-export type Language = {
-  iso_639_1: string;
-  english_name: string;
-  name: string;
-};
+import { Company, Country, Language } from './Common';
+import { Genre } from './Genre';
+
 export type Appended_Video = {
   id: string;
   iso_639_1: string;
@@ -78,22 +58,4 @@ export type Movie = {
   vote_count: number;
   video: boolean;
   vote_average: number;
-};
-
-export type PaginatedResult = {
-  page: number;
-  results: Movie[];
-  total_pages: number;
-  total_results: number;
-};
-
-export enum MEDIA_TYPE {
-  Movie = "movie",
-  Tv = "tv",
-}
-
-export type CommonTitle = {
-  id?: number;
-  name: string;
-  apiString: string;
 };

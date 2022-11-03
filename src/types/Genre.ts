@@ -1,5 +1,10 @@
-export type GenreType = {
+export type Genre = {
   id: number;
   name: string;
-  apiString?: string;
+};
+
+export type CustomGenre = {
+  id?: number;
+  name: string;
+  apiString: string;
 };

@@ -11,7 +11,7 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import SearchBox from "./SearchBox";
-import useOffSetTop from "hooks/useOffSetTop";
+import useOffSetTop from "src/hooks/useOffSetTop";
 import Logo from "./Logo";
 import NetflixNavigationLink from "./NetflixNavigationLink";
 
@@ -132,7 +132,7 @@ const Header = () => {
           <SearchBox />
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              <Avatar alt="Remy Sharp" />
             </IconButton>
           </Tooltip>
           <Menu
