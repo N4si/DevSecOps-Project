@@ -100,12 +100,3 @@ docker run --name netflix-clone-website --rm -d -p 80:80 netflix-clone
 > Because this project only aims to show how to use the features mentioned above.
 > So I welcome anyone who wants to contribute.
 > If there are anyone who wants to contribute, there are some points(animation using `react-use`, not `framer-motion`, and fix position of the portal in Grid page)
-
-## A Similar and More Complex project
-
-I am working on [Afrikast](https://afrikast.vercel.app/), a more complex project now.
-
-It has almost all the features are needed in a common video streaming website.
-
-If anyone is interested in the project, you can log in with the following user, and explore the website.
-`webdev@gmail.com/123456`
