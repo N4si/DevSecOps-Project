@@ -21,11 +21,11 @@ export default function MainRoutes() {
       element: <MainLayout />,
       children: [
         {
-          path: MAIN_PATH.browse,
+          path: "browse",
           children: [{ path: "", element: <HomePage /> }],
         },
         {
-          path: MAIN_PATH.genreExplore,
+          path: "genre",
           children: [{ path: ":genreId", element: <GenreExplorePage /> }],
         },
       ],
