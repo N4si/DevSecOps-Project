@@ -38,9 +38,8 @@ const HomePage = Loadable(lazy(() => import("src/pages/HomePage")));
 const GenreExplorePage = Loadable(lazy(() => import("src/pages/GenreExplore")));
 
 const routes = createBrowserRouter([
-  { path: "/", element: <Navigate to={MAIN_PATH.browse} replace /> },
+  { path: "/", element: <Navigate to={MAIN_PATH.browse} /> },
   {
-    path: "/",
     element: <MainLayout />,
     children: [
       {
