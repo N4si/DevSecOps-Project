@@ -1,5 +1,7 @@
+import { RouterProvider } from "react-router-dom";
 import Box from "@mui/material/Box";
-import MainRoutes from "src/routes";
+// import MainRoutes from "src/routes";
+import router from "src/routes";
 
 function App() {
   return (
@@ -11,7 +13,8 @@ function App() {
         position: "relative",
       }}
     >
-      <MainRoutes />
+      {/* <MainRoutes /> */}
+      <RouterProvider router={router} />
     </Box>
   );
 }

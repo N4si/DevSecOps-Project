@@ -1,5 +1,5 @@
 import { ElementType, lazy, Suspense } from "react";
-import { useRoutes, Navigate } from "react-router-dom";
+import { Navigate, createBrowserRouter } from "react-router-dom";
 import MainLoadingScreen from "src/components/MainLoadingScreen";
 
 import MainLayout from "src/layouts/MainLayout";
@@ -13,26 +13,46 @@ const Loadable = (Component: ElementType) => (props: any) => {
   );
 };
 
-export default function MainRoutes() {
-  let routes = useRoutes([
-    { path: "", element: <Navigate to={MAIN_PATH.browse} replace /> },
-    {
-      path: "",
-      element: <MainLayout />,
-      children: [
-        {
-          path: "browse",
-          children: [{ path: "", element: <HomePage /> }],
-        },
-        {
-          path: "genre",
-          children: [{ path: ":genreId", element: <GenreExplorePage /> }],
-        },
-      ],
-    },
-  ]);
-  return routes;
-}
+// export default function MainRoutes() {
+//   let routes = useRoutes([
+//     { path: "", element: <Navigate to={MAIN_PATH.browse} replace /> },
+//     {
+//       path: "",
+//       element: <MainLayout />,
+//       children: [
+//         {
+//           path: "browse",
+//           children: [{ path: "", element: <HomePage /> }],
+//         },
+//         {
+//           path: "genre",
+//           children: [{ path: ":genreId", element: <GenreExplorePage /> }],
+//         },
+//       ],
+//     },
+//   ]);
+//   return routes;
+// }
 
 const HomePage = Loadable(lazy(() => import("src/pages/HomePage")));
 const GenreExplorePage = Loadable(lazy(() => import("src/pages/GenreExplore")));
+
+const routes = createBrowserRouter([
+  { path: "/", element: <Navigate to={MAIN_PATH.browse} replace /> },
+  {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      {
+        path: "browse",
+        children: [{ path: "", element: <HomePage /> }],
+      },
+      {
+        path: "genre",
+        children: [{ path: ":genreId", element: <GenreExplorePage /> }],
+      },
+    ],
+  },
+]);
+
+export default routes;
