@@ -1,6 +1,5 @@
 import { RouterProvider } from "react-router-dom";
 import Box from "@mui/material/Box";
-// import MainRoutes from "src/routes";
 import router from "src/routes";
 
 function App() {

@@ -13,27 +13,6 @@ const Loadable = (Component: ElementType) => (props: any) => {
   );
 };
 
-// export default function MainRoutes() {
-//   let routes = useRoutes([
-//     { path: "", element: <Navigate to={MAIN_PATH.browse} replace /> },
-//     {
-//       path: "",
-//       element: <MainLayout />,
-//       children: [
-//         {
-//           path: "browse",
-//           children: [{ path: "", element: <HomePage /> }],
-//         },
-//         {
-//           path: "genre",
-//           children: [{ path: ":genreId", element: <GenreExplorePage /> }],
-//         },
-//       ],
-//     },
-//   ]);
-//   return routes;
-// }
-
 const HomePage = Loadable(lazy(() => import("src/pages/HomePage")));
 const GenreExplorePage = Loadable(lazy(() => import("src/pages/GenreExplore")));
 
