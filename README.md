@@ -6,13 +6,13 @@
   <h3 align="center">Netflix Clone</h3>
 
   <p align="center">
-    <a href="http://netflix-clone-with-tmdb-using-react-mui.vercel.app/">View Demo</a>
+    <a href="https://netflix-clone-react-typescript.vercel.app/">View Demo</a>
     ·
     <a href="https://www.youtube.com/watch?v=eRL0r3GEDiw">YouTube</a>
     ·
-    <a href="https://github.com/endo-aki22/netflix-clone-with-tmdb-using-react-mui/issues">Report Bug</a>
+    <a href="https://github.com/endo-aki22/netflix-clone-react-typescript/issues">Report Bug</a>
     ·
-    <a href="https://github.com/endo-aki22/netflix-clone-with-tmdb-using-react-mui/issues">Request Feature</a>
+    <a href="https://github.com/endo-aki22/netflix-clone-react-typescript/issues">Request Feature</a>
   </p>
 </div>
 
@@ -93,7 +93,6 @@ docker run --name netflix-clone-website --rm -d -p 80:80 netflix-clone
 ## Contact
 
 - endo_aki22@outlook.com
-- [Linkedin](https://www.linkedin.com/in/endo-aki-63b8791a6/)
 
 > **Note**
 > There might be several things to improve for performance.
