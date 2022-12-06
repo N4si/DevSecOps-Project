@@ -4,6 +4,7 @@ import "./CustomClassNameSetup";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import store from "./store";
@@ -19,9 +20,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <React.StrictMode>
-      <ThemeProvider theme={createTheme({ palette })}>
-        <App />
-      </ThemeProvider>
+      <BrowserRouter>
+        <ThemeProvider theme={createTheme({ palette })}>
+          <App />
+        </ThemeProvider>
+      </BrowserRouter>
     </React.StrictMode>
   </Provider>
 );

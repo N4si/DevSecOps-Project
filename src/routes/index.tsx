@@ -1,5 +1,5 @@
 import { ElementType, lazy, Suspense } from "react";
-import { Navigate, createBrowserRouter } from "react-router-dom";
+import { Navigate, useRoutes } from "react-router-dom";
 import MainLoadingScreen from "src/components/MainLoadingScreen";
 
 import MainLayout from "src/layouts/MainLayout";
@@ -16,21 +16,23 @@ const Loadable = (Component: ElementType) => (props: any) => {
 const HomePage = Loadable(lazy(() => import("src/pages/HomePage")));
 const GenreExplorePage = Loadable(lazy(() => import("src/pages/GenreExplore")));
 
-const routes = createBrowserRouter([
-  { path: "/", element: <Navigate to={MAIN_PATH.browse} /> },
-  {
-    element: <MainLayout />,
-    children: [
-      {
-        path: "browse",
-        children: [{ path: "", element: <HomePage /> }],
-      },
-      {
-        path: "genre",
-        children: [{ path: ":genreId", element: <GenreExplorePage /> }],
-      },
-    ],
-  },
-]);
-
-export default routes;
+function MainRoutes() {
+  return useRoutes([
+    {
+      path: "/",
+      element: <MainLayout />,
+      children: [
+        { path: "", element: <Navigate to={MAIN_PATH.browse} /> },
+        {
+          path: "browse",
+          element: <HomePage />,
+        },
+        {
+          path: "genre",
+          children: [{ path: ":genreId", element: <GenreExplorePage /> }],
+        },
+      ],
+    },
+  ]);
+}
+export default MainRoutes;
