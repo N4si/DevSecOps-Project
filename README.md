@@ -8,8 +8,6 @@
   <p align="center">
     <a href="https://netflix-clone-react-typescript.vercel.app/">View Demo</a>
     ·
-    <a href="https://www.youtube.com/watch?v=eRL0r3GEDiw">YouTube</a>
-    ·
     <a href="https://github.com/endo-aki22/netflix-clone-react-typescript/issues">Report Bug</a>
     ·
     <a href="https://github.com/endo-aki22/netflix-clone-react-typescript/issues">Request Feature</a>
