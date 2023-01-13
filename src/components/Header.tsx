@@ -10,15 +10,16 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import SearchBox from "./SearchBox";
 import useOffSetTop from "src/hooks/useOffSetTop";
+import { APP_BAR_HEIGHT } from "src/constant";
 import Logo from "./Logo";
+import SearchBox from "./SearchBox";
 import NetflixNavigationLink from "./NetflixNavigationLink";
 
 const pages = ["My List", "Movies", "Tv Shows"];
 
 const Header = () => {
-  const isOffset = useOffSetTop(100);
+  const isOffset = useOffSetTop(APP_BAR_HEIGHT);
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -45,15 +46,15 @@ const Header = () => {
   return (
     <AppBar
       sx={{
-        height: 70,
-        boxShadow: 0,
         px: "60px",
-        bgcolor: "transparent",
+        height: APP_BAR_HEIGHT,
         backgroundImage: "none",
-        ...(isOffset && {
-          bgcolor: "primary.main",
-          boxShadow: (theme) => theme.shadows[4],
-        }),
+        ...(isOffset
+          ? {
+              bgcolor: "primary.main",
+              boxShadow: (theme) => theme.shadows[4],
+            }
+          : { boxShadow: 0, bgcolor: "transparent" }),
       }}
     >
       <Toolbar disableGutters>

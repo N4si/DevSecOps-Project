@@ -12,3 +12,4 @@ export const COMMON_TITLES: CustomGenre[] = [
 ];
 
 export const YOUTUBE_URL = "https://www.youtube.com/watch?v=";
+export const APP_BAR_HEIGHT = 70;
