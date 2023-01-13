@@ -1,28 +1,19 @@
-import { styled, alpha } from "@mui/material/styles";
+import { useState, useRef, useEffect } from "react";
+import { styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 0,
   width: "100%",
   display: "flex",
   alignItems: "center",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
-    width: "auto",
-  },
 }));
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
+  cursor: "pointer",
   padding: theme.spacing(0, 1),
   height: "100%",
-  pointerEvents: "none",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -30,29 +21,46 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+  "& .NetflixInputBase-input": {
     transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      "&:focus": {
-        width: "20ch",
-      },
+    width: 0,
+    "&:focus": {
+      width: "auto",
     },
   },
 }));
 
 export default function SearchBox() {
+  const [isFocused, setIsFocused] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>();
+
+  const handleClickSearchIcon = () => {
+    if (!isFocused) {
+      searchInputRef.current?.focus();
+    }
+  };
+
   return (
-    <Search>
-      <SearchIconWrapper>
+    <Search
+      sx={
+        isFocused ? { border: "1px solid white", backgroundColor: "black" } : {}
+      }
+    >
+      <SearchIconWrapper onClick={handleClickSearchIcon}>
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
-        placeholder="Search…"
-        inputProps={{ "aria-label": "search" }}
+        inputRef={searchInputRef}
+        placeholder="Titles, people, genres"
+        inputProps={{
+          "aria-label": "search",
+          onFocus: () => {
+            setIsFocused(true);
+          },
+          onBlur: () => {
+            setIsFocused(false);
+          },
+        }}
       />
     </Search>
   );
