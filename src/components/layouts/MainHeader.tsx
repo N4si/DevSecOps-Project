@@ -134,7 +134,7 @@ const MainHeader = () => {
           <SearchBox />
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="Remy Sharp" />
+              <Avatar alt="user_avatar" src="/avatar.png" variant="rounded" />
             </IconButton>
           </Tooltip>
           <Menu
