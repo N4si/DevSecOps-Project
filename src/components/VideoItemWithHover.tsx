@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useDeferredValue } from "react";
 import { Movie } from "src/types/Movie";
 import { usePortal } from "src/providers/PortalProvider";
 import { useGetConfigurationQuery } from "src/store/slices/configuration";
@@ -13,13 +13,15 @@ export default function VideoItemWithHover({ video }: VideoItemWithHoverProps) {
   const { setPortal } = usePortal();
   const elementRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
+  // const deferredStatus = useDeferredValue(isHovered);
+
   const { data: configuration } = useGetConfigurationQuery(undefined);
   const [debouncedHoverStated, setDebouncedHoverState] = useState(false);
   useDebounce(
     () => {
       setDebouncedHoverState(isHovered);
     },
-    700,
+    isHovered ? 300 : 0,
     [isHovered]
   );
 
@@ -28,6 +30,12 @@ export default function VideoItemWithHover({ video }: VideoItemWithHoverProps) {
       setPortal(elementRef.current, video);
     }
   }, [debouncedHoverStated]);
+
+  // useEffect(() => {
+  //   if (deferredStatus) {
+  //     setPortal(elementRef.current, video);
+  //   }
+  // }, [deferredStatus]);
 
   return (
     <VideoItemWithHoverPure

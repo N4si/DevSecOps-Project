@@ -70,7 +70,7 @@
 
 - [MUI(Material UI)](https://mui.com/)
 - [framer-motion](https://www.framer.com/docs/)
-- [react-player](https://github.com/CookPete/react-player)
+- [video.js](https://videojs.com)
 - [react-use](https://github.com/streamich/react-use)
 - [react-slick](https://react-slick.neostack.com/)
 

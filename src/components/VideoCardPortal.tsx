@@ -40,6 +40,7 @@ export default function VideoCardModal({
   return (
     <Card
       onMouseLeave={() => {
+        console.log("Mouse out");
         setPortal(null, null);
       }}
       sx={{
