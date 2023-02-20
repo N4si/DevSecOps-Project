@@ -113,9 +113,10 @@ export default function TopTrailer({ mediaType }: TopTrailerProps) {
                     videoId={detail.videos.results[0]?.key || "L3oOldViIgY"}
                     options={{
                       autoplay: true,
-                      controls: false,
                       loop: true,
                       muted: true,
+                      responsive: true,
+                      fluid: true,
                     }}
                     onReady={handleReady}
                   />
