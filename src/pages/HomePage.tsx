@@ -1,6 +1,6 @@
 import Stack from "@mui/material/Stack";
 import { COMMON_TITLES } from "src/constant";
-import TopTrailer from "src/components/TopTrailer";
+import HeroSection from "src/components/HeroSection";
 import { useGetGenresQuery } from "src/store/slices/genre";
 import { MEDIA_TYPE } from "src/types/Common";
 import { CustomGenre, Genre } from "src/types/Genre";
@@ -14,11 +14,15 @@ function HomePage() {
     isSuccess,
   } = useGetGenresQuery(MEDIA_TYPE.Movie);
   if (isLoading) {
-    return <div style={{ color: "white" }}><MainLoadingScreen /></div>;
+    return (
+      <div style={{ color: "white" }}>
+        <MainLoadingScreen />
+      </div>
+    );
   } else if (isSuccess && genres && genres.length > 0) {
     return (
       <Stack spacing={2} sx={{ bgcolor: "background.default" }}>
-        <TopTrailer mediaType={MEDIA_TYPE.Movie} />
+        <HeroSection mediaType={MEDIA_TYPE.Movie} />
         {[...COMMON_TITLES, ...genres].map((genre: Genre | CustomGenre) => (
           <SliderRowForGenre
             key={genre.id || genre.name}

@@ -1,5 +1,4 @@
 import { useEffect, useState, useMemo, useCallback, useRef } from "react";
-import YouTubePlayer from "react-player/youtube";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
@@ -10,7 +9,6 @@ import PlayButton from "./PlayButton";
 import MoreInfoButton from "./MoreInfoButton";
 import NetflixIconButton from "./NetflixIconButton";
 import MaturityRate from "./MaturityRate";
-import { YOUTUBE_URL } from "src/constant";
 import useOffSetTop from "src/hooks/useOffSetTop";
 import { useDetailModal } from "src/providers/DetailModalProvider";
 import { MEDIA_TYPE } from "src/types/Common";
@@ -19,6 +17,8 @@ import {
   useLazyGetAppendedVideosQuery,
 } from "src/store/slices/discover";
 import { Movie } from "src/types/Movie";
+import { YoutubePlayer } from "./Player";
+import { VideoJsPlayer } from "video.js";
 
 interface TopTrailerProps {
   mediaType: MEDIA_TYPE;
@@ -32,25 +32,26 @@ export default function TopTrailer({ mediaType }: TopTrailerProps) {
   });
   const [getVideoDetail, { data: detail }] = useLazyGetAppendedVideosQuery();
   const [video, setVideo] = useState<Movie | null>(null);
-  const [mute, setMute] = useState(false);
-  const playerRef = useRef<YouTubePlayer | null>(null);
+  const [muted, setMuted] = useState(true);
+  const playerRef = useRef<VideoJsPlayer | null>(null);
   const isOffset = useOffSetTop(window.innerWidth * 0.5625);
   const { setDetailType } = useDetailModal();
   const maturityRate = useMemo(() => {
     return getRandomNumber(20);
   }, []);
 
-  const handleReady = useCallback((player: YouTubePlayer) => {
-    player.getInternalPlayer().playVideo();
+  const handleReady = useCallback((player: VideoJsPlayer) => {
     playerRef.current = player;
   }, []);
 
   useEffect(() => {
     if (playerRef.current) {
       if (isOffset) {
-        playerRef.current.getInternalPlayer().pauseVideo();
+        playerRef.current.pause();
       } else {
-        playerRef.current.getInternalPlayer().playVideo();
+        if (playerRef.current.paused()) {
+          playerRef.current.play();
+        }
       }
     }
   }, [isOffset]);
@@ -70,24 +71,30 @@ export default function TopTrailer({ mediaType }: TopTrailerProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [video]);
 
+  const handleMute = useCallback((status: boolean) => {
+    if (playerRef.current) {
+      playerRef.current.muted(!status);
+      setMuted(!status);
+    }
+  }, []);
+
   return (
     <Box sx={{ position: "relative", zIndex: 1 }}>
       <Box
         sx={{
+          mb: 3,
+          pb: "40%",
           top: 0,
           left: 0,
           right: 0,
           position: "relative",
-          pb: "40%",
-          mb: 3,
         }}
       >
         <Box
           sx={{
             width: "100%",
-            position: "absolute",
             height: "56.25vw",
-            // paddingTop: "calc(9 / 16 * 100%)",
+            position: "absolute",
           }}
         >
           {video && (
@@ -101,50 +108,16 @@ export default function TopTrailer({ mediaType }: TopTrailerProps) {
                   position: "absolute",
                 }}
               >
-                {/* <Box
-              component="img"
-              src={`${configuration.images?.base_url}original${video.backdrop_path}`}
-              sx={{
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                width: "100%",
-                // height: "100%",
-                objectFit: "cover",
-                position: "absolute",
-                backgroundPosition: "50%",
-              }}
-            /> */}
                 {detail && (
-                  <YouTubePlayer
-                    loop
-                    width="100%"
-                    height="100%"
-                    muted={mute}
-                    config={{
-                      onUnstarted: () => {
-                        if (playerRef.current) {
-                          playerRef.current.getInternalPlayer().playVideo();
-                        }
-                      },
-                      // not working
-                      playerVars: {
-                        controls: 0,
-                        autoplay: 1,
-                        loop: 1,
-                        modestbranding: 1,
-                        iv_load_policy: 3,
-                      },
-                      embedOptions: {
-                        controls: 0,
-                        autoplay: 1,
-                      },
+                  <YoutubePlayer
+                    videoId={detail.videos.results[0]?.key || "L3oOldViIgY"}
+                    options={{
+                      autoplay: true,
+                      controls: false,
+                      loop: true,
+                      muted: true,
                     }}
-                    url={`${YOUTUBE_URL}${
-                      detail.videos.results[0]?.key || "L3oOldViIgY"
-                    }`}
-                    onReady={(player) => handleReady(player as YouTubePlayer)}
+                    onReady={handleReady}
                   />
                 )}
                 <Box
@@ -187,12 +160,10 @@ export default function TopTrailer({ mediaType }: TopTrailerProps) {
                 >
                   <NetflixIconButton
                     size="large"
-                    onClick={() => {
-                      setMute((v) => !v);
-                    }}
+                    onClick={() => handleMute(muted)}
                     sx={{ zIndex: 2 }}
                   >
-                    {!mute ? <VolumeUpIcon /> : <VolumeOffIcon />}
+                    {!muted ? <VolumeUpIcon /> : <VolumeOffIcon />}
                   </NetflixIconButton>
                   <MaturityRate>{`${maturityRate}+`}</MaturityRate>
                 </Stack>

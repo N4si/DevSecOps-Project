@@ -1,5 +1,4 @@
-import { forwardRef, useState } from "react";
-import YouTubePlayer from "react-player/youtube";
+import { forwardRef, useCallback, useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
@@ -15,8 +14,6 @@ import AddIcon from "@mui/icons-material/Add";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import VolumeOffIcon from "@mui/icons-material/VolumeOff";
-// import { Movie, MovieDetail } from "src/types/Movie";
-import { YOUTUBE_URL } from "src/constant";
 import MaxLineTypography from "./MaxLineTypography";
 import PlayButton from "./PlayButton";
 import NetflixIconButton from "./NetflixIconButton";
@@ -30,6 +27,8 @@ import {
   useGetSimilarVideosQuery,
 } from "src/store/slices/discover";
 import { MEDIA_TYPE } from "src/types/Common";
+import { YoutubePlayer } from "./Player";
+import { VideoJsPlayer } from "video.js";
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -56,7 +55,20 @@ export default function DetailModal() {
     { mediaType: detailType.mediaType, id: detailType.id ?? 0 },
     { skip: !detailType.id }
   );
-  const [mute, setMute] = useState(false);
+  const playerRef = useRef<VideoJsPlayer | null>(null);
+  const [muted, setMuted] = useState(true);
+
+  const handleReady = useCallback((player: VideoJsPlayer) => {
+    playerRef.current = player;
+    setMuted(player.muted());
+  }, []);
+
+  const handleMute = useCallback((status: boolean) => {
+    if (playerRef.current) {
+      playerRef.current.muted(!status);
+      setMuted(!status);
+    }
+  }, []);
 
   if (detailType.id) {
     return (
@@ -69,7 +81,6 @@ export default function DetailModal() {
         TransitionComponent={Transition}
       >
         <DialogContent sx={{ p: 0, bgcolor: "#181818" }}>
-          {/* <Box sx={{ position: "relative" }}> */}
           <Box
             sx={{
               top: 0,
@@ -83,19 +94,17 @@ export default function DetailModal() {
               sx={{
                 width: "100%",
                 position: "relative",
-                paddingTop: "calc(9 / 16 * 100%)",
+                height: "calc(9 / 16 * 100%)",
               }}
             >
-              <YouTubePlayer
-                loop
-                muted={mute}
-                playing={true}
-                width="100%"
-                height="100%"
-                url={`${YOUTUBE_URL}${
-                  detail?.videos.results[0]?.key || "L3oOldViIgY"
-                }`}
-                style={{ position: "absolute", top: 0 }}
+              <YoutubePlayer
+                videoId={detail?.videos.results[0]?.key || "L3oOldViIgY"}
+                options={{
+                  autoplay: true,
+                  controls: false,
+                  loop: true,
+                }}
+                onReady={handleReady}
               />
 
               <Box
@@ -169,19 +178,15 @@ export default function DetailModal() {
                   <Box flexGrow={1} />
                   <NetflixIconButton
                     size="large"
-                    onClick={() => {
-                      setMute((v) => !v);
-                    }}
+                    onClick={() => handleMute(muted)}
                     sx={{ zIndex: 2 }}
                   >
-                    {!mute ? <VolumeUpIcon /> : <VolumeOffIcon />}
+                    {!muted ? <VolumeUpIcon /> : <VolumeOffIcon />}
                   </NetflixIconButton>
                 </Stack>
 
                 <Container
                   sx={{
-                    // py: 2,
-                    // px: { xs: 2, sm: 3, md: 5 },
                     p: "0px !important",
                   }}
                 >
@@ -246,10 +251,10 @@ export default function DetailModal() {
               </Container>
             )}
           </Box>
-          {/* </Box> */}
         </DialogContent>
       </Dialog>
     );
   }
+
   return null;
 }

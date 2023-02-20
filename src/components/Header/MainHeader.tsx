@@ -12,13 +12,13 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import useOffSetTop from "src/hooks/useOffSetTop";
 import { APP_BAR_HEIGHT } from "src/constant";
-import Logo from "./Logo";
-import SearchBox from "./SearchBox";
-import NetflixNavigationLink from "./NetflixNavigationLink";
+import Logo from "../Logo";
+import SearchBox from "../SearchBox";
+import NetflixNavigationLink from "../NetflixNavigationLink";
 
 const pages = ["My List", "Movies", "Tv Shows"];
 
-const Header = () => {
+const MainHeader = () => {
   const isOffset = useOffSetTop(APP_BAR_HEIGHT);
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -46,6 +46,7 @@ const Header = () => {
   return (
     <AppBar
       sx={{
+        // px: "4%",
         px: "60px",
         height: APP_BAR_HEIGHT,
         backgroundImage: "none",
@@ -163,4 +164,4 @@ const Header = () => {
     </AppBar>
   );
 };
-export default Header;
+export default MainHeader;

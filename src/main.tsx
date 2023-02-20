@@ -20,11 +20,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <React.StrictMode>
-      <BrowserRouter>
-        <ThemeProvider theme={createTheme({ palette })}>
-          <App />
-        </ThemeProvider>
-      </BrowserRouter>
+    <BrowserRouter>
+      <ThemeProvider theme={createTheme({ palette })}>
+        <App />
+      </ThemeProvider>
+    </BrowserRouter>
     </React.StrictMode>
   </Provider>
 );
