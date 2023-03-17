@@ -1,9 +1,9 @@
 import { ElementType, lazy, Suspense } from "react";
-import { Navigate, useRoutes } from "react-router-dom";
+import { Navigate, createBrowserRouter } from "react-router-dom";
 import MainLoadingScreen from "src/components/MainLoadingScreen";
+import { MAIN_PATH } from "src/constant";
 
 import MainLayout from "src/layouts/MainLayout";
-import { MAIN_PATH } from "./paths";
 
 const Loadable = (Component: ElementType) => (props: any) => {
   return (
@@ -16,23 +16,25 @@ const Loadable = (Component: ElementType) => (props: any) => {
 const HomePage = Loadable(lazy(() => import("src/pages/HomePage")));
 const GenreExplorePage = Loadable(lazy(() => import("src/pages/GenreExplore")));
 
-function MainRoutes() {
-  return useRoutes([
-    {
-      path: "/",
-      element: <MainLayout />,
-      children: [
-        { path: "", element: <Navigate to={MAIN_PATH.browse} /> },
-        {
-          path: "browse",
-          element: <HomePage />,
-        },
-        {
-          path: "genre",
-          children: [{ path: ":genreId", element: <GenreExplorePage /> }],
-        },
-      ],
-    },
-  ]);
-}
-export default MainRoutes;
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      {
+        path: MAIN_PATH.root,
+        element: <Navigate to={`/${MAIN_PATH.browse}`} />,
+      },
+      {
+        path: MAIN_PATH.browse,
+        element: <HomePage />,
+      },
+      {
+        path: MAIN_PATH.genreExplore,
+        children: [{ path: ":genreId", element: <GenreExplorePage /> }],
+      },
+    ],
+  },
+]);
+
+export default router;

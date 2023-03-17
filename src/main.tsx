@@ -4,13 +4,15 @@ import "./CustomClassNameSetup";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Box from "@mui/material/Box";
 
 import store from "./store";
 import { extendedApi } from "./store/slices/configuration";
 import palette from "./theme/palette";
-import App from "./App";
+import router from "./routes";
+import MainLoadingScreen from "./components/MainLoadingScreen";
 
 store.dispatch(extendedApi.endpoints.getConfiguration.initiate(undefined));
 
@@ -20,11 +22,21 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <React.StrictMode>
-    <BrowserRouter>
       <ThemeProvider theme={createTheme({ palette })}>
-        <App />
+        <Box
+          sx={{
+            width: "100%",
+            height: "100vh",
+            bgcolor: "background.default",
+            position: "relative",
+          }}
+        >
+          <RouterProvider
+            router={router}
+            fallbackElement={<MainLoadingScreen />}
+          />
+        </Box>
       </ThemeProvider>
-    </BrowserRouter>
     </React.StrictMode>
   </Provider>
 );
