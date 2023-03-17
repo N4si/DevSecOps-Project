@@ -84,10 +84,11 @@ docker run --name netflix-clone-website --rm -d -p 80:80 netflix-clone
 
 ## Todo
 
-- Implement animation using motion hook from `react-use`, now I am using `framer-motion` for animation. If we use the motion hook from `react-use`, `framer-motion` is not needed.
+- Make the animation of video card portal more similar to Netflix.
 - Improve performance. I am using `context` and `provider` but all components subscribed to the context's value are re-rendered. These re-renders happen even if the part of the value is not used in render of the component. there are [several ways](https://blog.axlight.com/posts/4-options-to-prevent-extra-rerenders-with-react-context/) to prevent the re-renders from these behaviours. In addition to them, there may be several performance issues.
 - Replace bundler([Vite](https://vitejs.dev/guide)) with [Turbopack](https://turbo.build/pack/docs/why-turbopack). Turbopack is introduced in Next.js conf recently. It's very fast but it's nor ready to use right now. it just support Next.js, and they plan to support all others as soon as possible. so if it's ready to use, replace [Vite](https://vitejs.dev/guide) with [Turbopack](https://turbo.build/pack/docs/why-turbopack).
-
+- Add accessibilities for better UX.
+- Add Tests.
 ## Contact
 
 - endo_aki22@outlook.com
@@ -96,4 +97,4 @@ docker run --name netflix-clone-website --rm -d -p 80:80 netflix-clone
 > There might be several things to improve for performance.
 > Because this project only aims to show how to use the features mentioned above.
 > So I welcome anyone who wants to contribute.
-> If there are anyone who wants to contribute, there are some points(animation using `react-use`, not `framer-motion`, and fix position of the portal in Grid page)
+> If there are anyone who wants to contribute, there are some points(fix position of the portal in Grid page)
