@@ -21,10 +21,16 @@ class VideoItemWithHoverPure extends React.PureComponent<VideoItemWithHoverPureT
           position: "relative",
           paddingTop: "calc(9 / 16 * 100%)",
         }}
-        onMouseEnter={() => {
+        // onMouseEnter={() => {
+        //   this.props.handleHover(true);
+        // }}
+        // onMouseLeave={() => {
+        //   this.props.handleHover(false);
+        // }}
+        onPointerEnter={() => {
           this.props.handleHover(true);
         }}
-        onMouseLeave={() => {
+        onPointerLeave={() => {
           this.props.handleHover(false);
         }}
       >

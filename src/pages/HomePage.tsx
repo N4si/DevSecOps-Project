@@ -5,21 +5,10 @@ import { useGetGenresQuery } from "src/store/slices/genre";
 import { MEDIA_TYPE } from "src/types/Common";
 import { CustomGenre, Genre } from "src/types/Genre";
 import SliderRowForGenre from "src/components/VideoSlider";
-import MainLoadingScreen from "src/components/MainLoadingScreen";
 
 function HomePage() {
-  const {
-    data: genres,
-    isLoading,
-    isSuccess,
-  } = useGetGenresQuery(MEDIA_TYPE.Movie);
-  if (isLoading) {
-    return (
-      <div style={{ color: "white" }}>
-        <MainLoadingScreen />
-      </div>
-    );
-  } else if (isSuccess && genres && genres.length > 0) {
+  const { data: genres, isSuccess } = useGetGenresQuery(MEDIA_TYPE.Movie);
+  if (isSuccess && genres && genres.length > 0) {
     return (
       <Stack spacing={2} sx={{ bgcolor: "background.default" }}>
         <HeroSection mediaType={MEDIA_TYPE.Movie} />
@@ -33,7 +22,7 @@ function HomePage() {
       </Stack>
     );
   }
-  return <div>Something went wrong</div>;
+  return null;
 }
 
 export default HomePage;
