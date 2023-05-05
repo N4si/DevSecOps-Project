@@ -36,7 +36,7 @@ const StyledSlider = styled(Slider)(
       "& .slick-list > .slick-track": {
         margin: "0px !important",
       },
-      "& .slick-list > .slick-track > .slick-current > div > .MuiBox-root > .MuiPaper-root:hover":
+      "& .slick-list > .slick-track > .slick-current > div > .NetflixBox-root > .NetflixPaper-root:hover":
         {
           transformOrigin: "0% 50% !important",
         },
