@@ -4,6 +4,7 @@ import MainLoadingScreen from "src/components/MainLoadingScreen";
 import { MAIN_PATH } from "src/constant";
 
 import MainLayout from "src/layouts/MainLayout";
+import WatchPage from "src/pages/WatchPage";
 
 const Loadable = (Component: ElementType) => (props: any) => {
   return (
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: MAIN_PATH.genreExplore,
         children: [{ path: ":genreId", element: <GenreExplorePage /> }],
+      },
+      {
+        path: MAIN_PATH.watch,
+        element: <WatchPage />,
       },
     ],
   },
