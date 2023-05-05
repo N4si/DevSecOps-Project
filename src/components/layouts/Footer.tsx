@@ -24,12 +24,12 @@ export default function Footer() {
           <Typography color="grey.700" variant="h6">
             Developed by{" "}
             <Link
-              href="https://www.linkedin.com/in/endo-aki-63b8791a6"
+              href="https://github.com/crazy-man22"
               underline="none"
               sx={{ color: "text.primary" }}
               target="_blank"
             >
-              Endo Aki
+              Crazy Man
             </Link>
           </Typography>
         </Divider>
