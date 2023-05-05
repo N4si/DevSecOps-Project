@@ -1,7 +1,10 @@
 import Button, { ButtonProps } from "@mui/material/Button";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import { useNavigate } from "react-router-dom";
+import { MAIN_PATH } from "src/constant";
 
 export default function PlayButton({ sx, ...others }: ButtonProps) {
+  const navigate = useNavigate();
   return (
     <Button
       color="inherit"
@@ -28,6 +31,7 @@ export default function PlayButton({ sx, ...others }: ButtonProps) {
         textTransform: "capitalize",
         ...sx,
       }}
+      onClick={() => navigate(`/${MAIN_PATH.watch}`)}
     >
       Play
     </Button>

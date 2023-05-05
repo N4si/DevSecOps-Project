@@ -21,6 +21,8 @@ import GenreBreadcrumbs from "./GenreBreadcrumbs";
 import { useGetConfigurationQuery } from "src/store/slices/configuration";
 import { MEDIA_TYPE } from "src/types/Common";
 import { useGetGenresQuery } from "src/store/slices/genre";
+import { MAIN_PATH } from "src/constant";
+import { useNavigate } from "react-router-dom";
 
 interface VideoCardModalProps {
   video: Movie;
@@ -31,6 +33,8 @@ export default function VideoCardModal({
   video,
   anchorElement,
 }: VideoCardModalProps) {
+  const navigate = useNavigate();
+
   const { data: configuration } = useGetConfigurationQuery(undefined);
   const { data: genres } = useGetGenresQuery(MEDIA_TYPE.Movie);
   const { setPortal } = usePortal();
@@ -105,6 +109,7 @@ export default function VideoCardModal({
                   fontSize: { xs: 36, sm: 40 },
                 },
               }}
+              onClick={() => navigate(`/${MAIN_PATH.watch}`)}
             >
               <PlayCircleIcon />
             </IconButton>
