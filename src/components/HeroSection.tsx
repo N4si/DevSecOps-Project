@@ -3,6 +3,8 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import VolumeOffIcon from "@mui/icons-material/VolumeOff";
+import Player from "video.js/dist/types/player";
+
 import { getRandomNumber } from "src/utils/common";
 import MaxLineTypography from "./MaxLineTypography";
 import PlayButton from "./PlayButton";
@@ -18,7 +20,6 @@ import {
 } from "src/store/slices/discover";
 import { Movie } from "src/types/Movie";
 import { YoutubePlayer } from "./Player";
-import { VideoJsPlayer } from "video.js";
 
 interface TopTrailerProps {
   mediaType: MEDIA_TYPE;
@@ -33,14 +34,14 @@ export default function TopTrailer({ mediaType }: TopTrailerProps) {
   const [getVideoDetail, { data: detail }] = useLazyGetAppendedVideosQuery();
   const [video, setVideo] = useState<Movie | null>(null);
   const [muted, setMuted] = useState(true);
-  const playerRef = useRef<VideoJsPlayer | null>(null);
+  const playerRef = useRef<Player | null>(null);
   const isOffset = useOffSetTop(window.innerWidth * 0.5625);
   const { setDetailType } = useDetailModal();
   const maturityRate = useMemo(() => {
     return getRandomNumber(20);
   }, []);
 
-  const handleReady = useCallback((player: VideoJsPlayer) => {
+  const handleReady = useCallback((player: Player) => {
     playerRef.current = player;
   }, []);
 

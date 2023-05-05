@@ -14,6 +14,8 @@ import AddIcon from "@mui/icons-material/Add";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import VolumeOffIcon from "@mui/icons-material/VolumeOff";
+import Player from "video.js/dist/types/player";
+
 import MaxLineTypography from "./MaxLineTypography";
 import PlayButton from "./PlayButton";
 import NetflixIconButton from "./NetflixIconButton";
@@ -28,7 +30,6 @@ import {
 } from "src/store/slices/discover";
 import { MEDIA_TYPE } from "src/types/Common";
 import { YoutubePlayer } from "./Player";
-import { VideoJsPlayer } from "video.js";
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -55,10 +56,10 @@ export default function DetailModal() {
     { mediaType: detailType.mediaType, id: detailType.id ?? 0 },
     { skip: !detailType.id }
   );
-  const playerRef = useRef<VideoJsPlayer | null>(null);
+  const playerRef = useRef<Player | null>(null);
   const [muted, setMuted] = useState(true);
 
-  const handleReady = useCallback((player: VideoJsPlayer) => {
+  const handleReady = useCallback((player: Player) => {
     playerRef.current = player;
     setMuted(player.muted());
   }, []);
