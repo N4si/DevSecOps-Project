@@ -8,9 +8,9 @@
   <p align="center">
     <a href="https://netflix-clone-react-typescript.vercel.app/">View Demo</a>
     ·
-    <a href="https://github.com/endo-aki22/netflix-clone-react-typescript/issues">Report Bug</a>
+    <a href="https://github.com/crazy-man22/netflix-clone-react-typescript/issues">Report Bug</a>
     ·
-    <a href="https://github.com/endo-aki22/netflix-clone-react-typescript/issues">Request Feature</a>
+    <a href="https://github.com/crazy-man22/netflix-clone-react-typescript/issues">Request Feature</a>
   </p>
 </div>
 
@@ -41,6 +41,8 @@
   <p align="center">Detail Modal</p>
   <img src="./public/assets/grid-genre.png" alt="Logo" width="100%" height="100%">
   <p align="center">Grid Genre Page</p>
+  <img src="./public/assets/watch.png" alt="Logo" width="100%" height="100%">
+  <p align="center">Watch Page with customer contol bar</p>
 </div>
 
 ## Prerequests
@@ -62,7 +64,7 @@
 - How to customize default theme of [MUI](https://mui.com/)
 - How to use [RTK](https://redux-toolkit.js.org/introduction/getting-started)
 - How to use [RTK Query](https://redux-toolkit.js.org/rtk-query/overview)
-- How to customize default classname of [MUI](https://mui.com/material-ui/experimental-api/classname-generator).
+- How to customize default classname of [MUI](https://mui.com/material-ui/experimental-api/classname-generator)
 - Infinite Scrolling(using [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API))
 - How to make awesome carousel using [slick-carousel](https://react-slick.neostack.com)
 
