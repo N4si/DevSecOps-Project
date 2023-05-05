@@ -21,8 +21,8 @@
     "react-router-dom": "^6.9.0",
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1",
-    "video.js": "7.21.2",
-    "videojs-youtube": "^2.6.1",
+    "video.js": "^8.3.0",
+    "videojs-youtube": "^3.0.1",
     "vite-tsconfig-paths": "^3.5.2"
   },
   "devDependencies": {
