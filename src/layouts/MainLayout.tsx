@@ -1,11 +1,13 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import DetailModal from "src/components/DetailModal";
 import VideoPortalContainer from "src/components/VideoPortalContainer";
 import DetailModalProvider from "src/providers/DetailModalProvider";
 import PortalProvider from "src/providers/PortalProvider";
 import { Footer, MainHeader } from "src/components/layouts";
+import { MAIN_PATH } from "src/constant";
 
 export default function MainLayout() {
+  const location = useLocation();
   return (
     <>
       <MainHeader />
@@ -16,7 +18,7 @@ export default function MainLayout() {
           <VideoPortalContainer />
         </PortalProvider>
       </DetailModalProvider>
-      <Footer />
+      {location.pathname !== `/${MAIN_PATH.watch}` && <Footer />}
     </>
   );
 }
