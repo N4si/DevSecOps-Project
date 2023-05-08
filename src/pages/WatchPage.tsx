@@ -21,7 +21,7 @@ import PlayerSeekbar from "src/components/watch/PlayerSeekbar";
 import PlayerControlButton from "src/components/watch/PlayerControlButton";
 import MainLoadingScreen from "src/components/MainLoadingScreen";
 
-export default function WatchPage() {
+export function Component() {
   const playerRef = useRef<Player | null>(null);
   const [playerState, setPlayerState] = useState({
     paused: false,
@@ -41,7 +41,7 @@ export default function WatchPage() {
       preload: "metadata",
       autoplay: true,
       controls: false,
-      responsive: true,
+      // responsive: true,
       // fluid: true,
       width: windowSize.width,
       height: windowSize.height,
@@ -102,8 +102,6 @@ export default function WatchPage() {
   const handleGoBack = () => {
     navigate("/browse");
   };
-
-  console.log("PlayerRef: ", playerRef.current);
 
   if (!!videoJsOptions.width) {
     return (
@@ -268,5 +266,7 @@ export default function WatchPage() {
       </Box>
     );
   }
-  return <MainLoadingScreen />;
+  return null;
 }
+
+Component.displayName = "WatchPage";

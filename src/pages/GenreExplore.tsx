@@ -5,7 +5,7 @@ import { MEDIA_TYPE } from "src/types/Common";
 import { CustomGenre, Genre } from "src/types/Genre";
 import { useGetGenresQuery } from "src/store/slices/genre";
 
-export default function GenreExplore() {
+export function Component() {
   const { genreId } = useParams();
   const { data: genres } = useGetGenresQuery(MEDIA_TYPE.Movie);
   let genre: Genre | CustomGenre | undefined;
@@ -19,3 +19,5 @@ export default function GenreExplore() {
   }
   return null;
 }
+
+Component.displayName = "GenreExplore";

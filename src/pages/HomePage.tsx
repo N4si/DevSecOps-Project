@@ -1,16 +1,24 @@
 import Stack from "@mui/material/Stack";
 import { COMMON_TITLES } from "src/constant";
 import HeroSection from "src/components/HeroSection";
-import { useGetGenresQuery } from "src/store/slices/genre";
+import { genreSliceEndpoints, useGetGenresQuery } from "src/store/slices/genre";
 import { MEDIA_TYPE } from "src/types/Common";
 import { CustomGenre, Genre } from "src/types/Genre";
 import SliderRowForGenre from "src/components/VideoSlider";
+import store from "src/store";
 
-function HomePage() {
+export async function loader() {
+  await store.dispatch(
+    genreSliceEndpoints.getGenres.initiate(MEDIA_TYPE.Movie)
+  );
+  return null;
+}
+export function Component() {
   const { data: genres, isSuccess } = useGetGenresQuery(MEDIA_TYPE.Movie);
+
   if (isSuccess && genres && genres.length > 0) {
     return (
-      <Stack spacing={2} sx={{ bgcolor: "background.default" }}>
+      <Stack spacing={2}>
         <HeroSection mediaType={MEDIA_TYPE.Movie} />
         {[...COMMON_TITLES, ...genres].map((genre: Genre | CustomGenre) => (
           <SliderRowForGenre
@@ -25,4 +33,4 @@ function HomePage() {
   return null;
 }
 
-export default HomePage;
+Component.displayName = "HomePage";

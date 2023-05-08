@@ -1,21 +1,7 @@
-import { ElementType, lazy, Suspense } from "react";
 import { Navigate, createBrowserRouter } from "react-router-dom";
-import MainLoadingScreen from "src/components/MainLoadingScreen";
 import { MAIN_PATH } from "src/constant";
 
 import MainLayout from "src/layouts/MainLayout";
-import WatchPage from "src/pages/WatchPage";
-
-const Loadable = (Component: ElementType) => (props: any) => {
-  return (
-    <Suspense fallback={<MainLoadingScreen />}>
-      <Component {...props} />
-    </Suspense>
-  );
-};
-
-const HomePage = Loadable(lazy(() => import("src/pages/HomePage")));
-const GenreExplorePage = Loadable(lazy(() => import("src/pages/GenreExplore")));
 
 const router = createBrowserRouter([
   {
@@ -28,15 +14,20 @@ const router = createBrowserRouter([
       },
       {
         path: MAIN_PATH.browse,
-        element: <HomePage />,
+        lazy: () => import("src/pages/HomePage"),
       },
       {
         path: MAIN_PATH.genreExplore,
-        children: [{ path: ":genreId", element: <GenreExplorePage /> }],
+        children: [
+          {
+            path: ":genreId",
+            lazy: () => import("src/pages/GenreExplore"),
+          },
+        ],
       },
       {
         path: MAIN_PATH.watch,
-        element: <WatchPage />,
+        lazy: () => import("src/pages/WatchPage"),
       },
     ],
   },
