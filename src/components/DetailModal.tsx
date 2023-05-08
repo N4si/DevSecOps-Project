@@ -37,12 +37,6 @@ const Transition = forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-// interface DetailModalProps {
-//   detail: MovieDetail | null;
-//   similarVideos: Movie[];
-//   onClose: VoidFunction;
-// }
-
 export default function DetailModal() {
   const { detail, setDetailType } = useDetailModal();
   const { data: similarVideos } = useGetSimilarVideosQuery(
@@ -70,7 +64,7 @@ export default function DetailModal() {
         fullWidth
         scroll="body"
         maxWidth="md"
-        open={!!detail}
+        open={!!detail.mediaDetail}
         id="detail_dialog"
         TransitionComponent={Transition}
       >
