@@ -11,7 +11,6 @@ export default function VideoJSPlayer({
   options: any;
   onReady: (player: Player) => void;
 }) {
-  console.log("Options: ", options);
   const videoRef = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<Player | null>(null);
 
