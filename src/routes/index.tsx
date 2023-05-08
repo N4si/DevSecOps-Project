@@ -2,6 +2,7 @@ import { Navigate, createBrowserRouter } from "react-router-dom";
 import { MAIN_PATH } from "src/constant";
 
 import MainLayout from "src/layouts/MainLayout";
+// import {loader as mainLoader} from 'src/pages/HomePage';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
           {
             path: ":genreId",
             lazy: () => import("src/pages/GenreExplore"),
+            loader: async () => {
+              const { loader: mainLoader } = await import("src/pages/HomePage");
+              return mainLoader();
+            },
           },
         ],
       },
