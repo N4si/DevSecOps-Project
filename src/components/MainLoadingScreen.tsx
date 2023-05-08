@@ -11,10 +11,13 @@ function MainLoadingScreen() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        position: "absolute",
+        position: "fixed",
+        backgroundColor: "#141414",
+        opacity: 0.75,
+        zIndex: 2,
       }}
     >
-      <CircularProgress sx={{ color: "white", zIndex: 10 }} />
+      <CircularProgress sx={{ color: "white" }} />
     </div>
   );
 }
