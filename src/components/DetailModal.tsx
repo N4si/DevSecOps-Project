@@ -24,10 +24,7 @@ import QualityChip from "./QualityChip";
 import { formatMinuteToReadable, getRandomNumber } from "src/utils/common";
 import SimilarVideoCard from "./SimilarVideoCard";
 import { useDetailModal } from "src/providers/DetailModalProvider";
-import {
-  useGetAppendedVideosQuery,
-  useGetSimilarVideosQuery,
-} from "src/store/slices/discover";
+import { useGetSimilarVideosQuery } from "src/store/slices/discover";
 import { MEDIA_TYPE } from "src/types/Common";
 import VideoJSPlayer from "./watch/VideoJSPlayer";
 
@@ -47,14 +44,10 @@ const Transition = forwardRef(function Transition(
 // }
 
 export default function DetailModal() {
-  const { detailType, setDetailType } = useDetailModal();
-  const { data: detail } = useGetAppendedVideosQuery(
-    { mediaType: detailType.mediaType, id: detailType.id ?? 0 },
-    { skip: !detailType.id }
-  );
+  const { detail, setDetailType } = useDetailModal();
   const { data: similarVideos } = useGetSimilarVideosQuery(
-    { mediaType: detailType.mediaType, id: detailType.id ?? 0 },
-    { skip: !detailType.id }
+    { mediaType: detail.mediaType ?? MEDIA_TYPE.Movie, id: detail.id ?? 0 },
+    { skip: !detail.id }
   );
   const playerRef = useRef<Player | null>(null);
   const [muted, setMuted] = useState(true);
@@ -71,14 +64,14 @@ export default function DetailModal() {
     }
   }, []);
 
-  if (detailType.id) {
+  if (detail.mediaDetail) {
     return (
       <Dialog
-        id="detail_dialog"
         fullWidth
         scroll="body"
         maxWidth="md"
         open={!!detail}
+        id="detail_dialog"
         TransitionComponent={Transition}
       >
         <DialogContent sx={{ p: 0, bgcolor: "#181818" }}>
@@ -110,7 +103,8 @@ export default function DetailModal() {
                     {
                       type: "video/youtube",
                       src: `https://www.youtube.com/watch?v=${
-                        detail?.videos.results[0]?.key || "L3oOldViIgY"
+                        detail.mediaDetail?.videos.results[0]?.key ||
+                        "L3oOldViIgY"
                       }`,
                     },
                   ],
@@ -148,7 +142,7 @@ export default function DetailModal() {
               />
               <IconButton
                 onClick={() => {
-                  setDetailType({ mediaType: MEDIA_TYPE.Movie, id: null });
+                  setDetailType({ mediaType: undefined, id: undefined });
                 }}
                 sx={{
                   top: 15,
@@ -176,7 +170,7 @@ export default function DetailModal() {
                 }}
               >
                 <MaxLineTypography variant="h4" maxLine={1} sx={{ mb: 2 }}>
-                  {detail?.title}
+                  {detail.mediaDetail?.title}
                 </MaxLineTypography>
                 <Stack direction="row" spacing={2} sx={{ mb: 3 }}>
                   <PlayButton sx={{ color: "black", py: 0 }} />
@@ -209,7 +203,7 @@ export default function DetailModal() {
                           sx={{ color: "success.main" }}
                         >{`${getRandomNumber(100)}% Match`}</Typography>
                         <Typography variant="body2">
-                          {detail?.release_date.substring(0, 4)}
+                          {detail.mediaDetail?.release_date.substring(0, 4)}
                         </Typography>
                         <AgeLimitChip label={`${getRandomNumber(20)}+`} />
                         <Typography variant="subtitle2">{`${formatMinuteToReadable(
@@ -223,17 +217,17 @@ export default function DetailModal() {
                         variant="body1"
                         sx={{ mt: 2 }}
                       >
-                        {detail?.overview}
+                        {detail.mediaDetail?.overview}
                       </MaxLineTypography>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
                       <Typography variant="body2" sx={{ my: 1 }}>
-                        {`Genres : ${detail?.genres
+                        {`Genres : ${detail.mediaDetail?.genres
                           .map((g) => g.name)
                           .join(", ")}`}
                       </Typography>
                       <Typography variant="body2" sx={{ my: 1 }}>
-                        {`Available in : ${detail?.spoken_languages
+                        {`Available in : ${detail.mediaDetail?.spoken_languages
                           .map((l) => l.name)
                           .join(", ")}`}
                       </Typography>

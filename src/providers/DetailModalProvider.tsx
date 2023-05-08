@@ -1,20 +1,19 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState, useCallback } from "react";
 import { useLocation } from "react-router-dom";
-import createSafeContext from "src/lib/createSafeContext";
-import { MEDIA_TYPE } from "src/types/Common";
 
+import { INITIAL_DETAIL_STATE } from "src/constant";
+import createSafeContext from "src/lib/createSafeContext";
+import { useLazyGetAppendedVideosQuery } from "src/store/slices/discover";
+import { MEDIA_TYPE } from "src/types/Common";
+import { MovieDetail } from "src/types/Movie";
+
+interface DetailType {
+  id?: number;
+  mediaType?: MEDIA_TYPE;
+}
 export interface DetailModalConsumerProps {
-  detailType: {
-    mediaType: MEDIA_TYPE;
-    id: number | null;
-  };
-  setDetailType: ({
-    mediaType,
-    id,
-  }: {
-    mediaType: MEDIA_TYPE;
-    id: number | null;
-  }) => void;
+  detail: { mediaDetail?: MovieDetail } & DetailType;
+  setDetailType: (newDetailType: DetailType) => void;
 }
 
 export const [useDetailModal, Provider] =
@@ -25,16 +24,35 @@ export default function DetailModalProvider({
 }: {
   children: ReactNode;
 }) {
-  const [detailType, setDetailType] = useState<{
-    mediaType: MEDIA_TYPE;
-    id: number | null;
-  }>({ mediaType: MEDIA_TYPE.Movie, id: null });
   const location = useLocation();
+  const [detail, setDetail] = useState<
+    { mediaDetail?: MovieDetail } & DetailType
+  >(INITIAL_DETAIL_STATE);
+
+  const [getAppendedVideos] = useLazyGetAppendedVideosQuery();
+
+  const handleChangeDetail = useCallback(
+    async (newDetailType: { mediaType?: MEDIA_TYPE; id?: number }) => {
+      if (!!newDetailType.id && newDetailType.mediaType) {
+        const response = await getAppendedVideos({
+          mediaType: newDetailType.mediaType,
+          id: newDetailType.id as number,
+        }).unwrap();
+        setDetail({ ...newDetailType, mediaDetail: response });
+      } else {
+        setDetail(INITIAL_DETAIL_STATE);
+      }
+    },
+    []
+  );
 
   useEffect(() => {
-    setDetailType({ mediaType: MEDIA_TYPE.Movie, id: null });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname]);
+    setDetail(INITIAL_DETAIL_STATE);
+  }, [location.pathname, setDetail]);
 
-  return <Provider value={{ setDetailType, detailType }}>{children}</Provider>;
+  return (
+    <Provider value={{ detail, setDetailType: handleChangeDetail }}>
+      {children}
+    </Provider>
+  );
 }
