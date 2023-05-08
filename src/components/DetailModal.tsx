@@ -29,7 +29,7 @@ import {
   useGetSimilarVideosQuery,
 } from "src/store/slices/discover";
 import { MEDIA_TYPE } from "src/types/Common";
-import { YoutubePlayer } from "./Player";
+import VideoJSPlayer from "./watch/VideoJSPlayer";
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -98,12 +98,22 @@ export default function DetailModal() {
                 height: "calc(9 / 16 * 100%)",
               }}
             >
-              <YoutubePlayer
-                videoId={detail?.videos.results[0]?.key || "L3oOldViIgY"}
+              <VideoJSPlayer
                 options={{
+                  loop: true,
                   autoplay: true,
                   controls: false,
-                  loop: true,
+                  responsive: true,
+                  fluid: true,
+                  techOrder: ["youtube"],
+                  sources: [
+                    {
+                      type: "video/youtube",
+                      src: `https://www.youtube.com/watch?v=${
+                        detail?.videos.results[0]?.key || "L3oOldViIgY"
+                      }`,
+                    },
+                  ],
                 }}
                 onReady={handleReady}
               />

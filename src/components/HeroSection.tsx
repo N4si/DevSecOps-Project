@@ -19,7 +19,7 @@ import {
   useLazyGetAppendedVideosQuery,
 } from "src/store/slices/discover";
 import { Movie } from "src/types/Movie";
-import { YoutubePlayer } from "./Player";
+import VideoJSPlayer from "./watch/VideoJSPlayer";
 
 interface TopTrailerProps {
   mediaType: MEDIA_TYPE;
@@ -110,14 +110,23 @@ export default function TopTrailer({ mediaType }: TopTrailerProps) {
                 }}
               >
                 {detail && (
-                  <YoutubePlayer
-                    videoId={detail.videos.results[0]?.key || "L3oOldViIgY"}
+                  <VideoJSPlayer
                     options={{
-                      autoplay: true,
                       loop: true,
                       muted: true,
+                      autoplay: true,
+                      controls: false,
                       responsive: true,
                       fluid: true,
+                      techOrder: ["youtube"],
+                      sources: [
+                        {
+                          type: "video/youtube",
+                          src: `https://www.youtube.com/watch?v=${
+                            detail.videos.results[0]?.key || "L3oOldViIgY"
+                          }`,
+                        },
+                      ],
                     }}
                     onReady={handleReady}
                   />
