@@ -21,8 +21,8 @@ export default function VideoJSPlayer({
       videoRef.current?.appendChild(videoElement);
       import("video.js").then(async ({ default: videojs }) => {
         await import("video.js/dist/video-js.css");
-        if (options["techOrder"].includes("youtube")) {
-          // eslint-disable-next-line camelcase
+        if (options["techOrder"] && options["techOrder"].includes("youtube")) {
+          // eslint-disable-next-line
           await import("videojs-youtube");
         }
         const player = (playerRef.current = videojs(
