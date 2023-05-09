@@ -6,7 +6,7 @@ const NetflixIconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
     return (
       <IconButton
         sx={{
-          p: 0.5,
+          p: 0,
           color: "white",
           borderRadius: "50%",
           borderWidth: "2px",
@@ -15,6 +15,11 @@ const NetflixIconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
           "&:hover, &:focus": {
             borderColor: "grey.200",
           },
+          width: { xs: 36, sm: 40 },
+          height: { xs: 36, sm: 40 },
+          // "& > svg": {
+          //   fontSize: { xs: 36, sm: 40 },
+          // },
           ...sx,
         }}
         {...others}
