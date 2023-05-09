@@ -96,8 +96,11 @@ export default function VideoCardModal({
       <CardContent>
         <Stack spacing={1}>
           <Stack direction="row" spacing={1}>
-            <NetflixIconButton onClick={() => navigate(`/${MAIN_PATH.watch}`)}>
-              <PlayCircleIcon />
+            <NetflixIconButton
+              sx={{ p: 0 }}
+              onClick={() => navigate(`/${MAIN_PATH.watch}`)}
+            >
+              <PlayCircleIcon sx={{ width: 40, height: 40 }} />
             </NetflixIconButton>
             <NetflixIconButton>
               <AddIcon />

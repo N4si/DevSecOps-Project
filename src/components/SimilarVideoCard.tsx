@@ -84,7 +84,7 @@ export default function SimilarVideoCard({ video }: SimilarVideoCardProps) {
               </Stack>
             </Box>
             <Box flexGrow={1} />
-            <NetflixIconButton size="large">
+            <NetflixIconButton>
               <AddIcon />
             </NetflixIconButton>
           </Stack>
