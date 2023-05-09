@@ -1,19 +1,17 @@
-import React from "react";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
+import { PureComponent, ForwardedRef, forwardRef } from "react";
 
 type VideoItemWithHoverPureType = {
   src: string;
-  innerRef: React.ForwardedRef<HTMLDivElement>;
+  innerRef: ForwardedRef<HTMLDivElement>;
   handleHover: (value: boolean) => void;
 };
 
-class VideoItemWithHoverPure extends React.PureComponent<VideoItemWithHoverPureType> {
+class VideoItemWithHoverPure extends PureComponent<VideoItemWithHoverPureType> {
   render() {
     return (
-      <Paper
+      <div
         ref={this.props.innerRef}
-        sx={{
+        style={{
           zIndex: 9,
           cursor: "pointer",
           borderRadius: 0.5,
@@ -21,36 +19,34 @@ class VideoItemWithHoverPure extends React.PureComponent<VideoItemWithHoverPureT
           position: "relative",
           paddingTop: "calc(9 / 16 * 100%)",
         }}
-        // onMouseEnter={() => {
-        //   this.props.handleHover(true);
-        // }}
-        // onMouseLeave={() => {
-        //   this.props.handleHover(false);
-        // }}
-        onPointerEnter={() => {
-          this.props.handleHover(true);
-        }}
-        onPointerLeave={() => {
-          this.props.handleHover(false);
-        }}
       >
-        <Box
-          component="img"
+        <img
           src={this.props.src}
-          sx={{
+          style={{
             top: 0,
             height: "100%",
             objectFit: "cover",
             position: "absolute",
             borderRadius: "4px",
           }}
+          onPointerEnter={() => {
+            // console.log("onPointerEnter");
+            this.props.handleHover(true);
+          }}
+          onPointerLeave={() => {
+            // console.log("onPointerLeave");
+            this.props.handleHover(false);
+          }}
         />
-      </Paper>
+      </div>
     );
   }
 }
 
-export default React.forwardRef<
+const VideoItemWithHoverRef = forwardRef<
   HTMLDivElement,
   Omit<VideoItemWithHoverPureType, "innerRef">
 >((props, ref) => <VideoItemWithHoverPure {...props} innerRef={ref} />);
+VideoItemWithHoverRef.displayName = "VideoItemWithHoverRef";
+
+export default VideoItemWithHoverRef;

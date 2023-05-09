@@ -1,6 +1,5 @@
-import Box from "@mui/material/Box";
+import { useNavigate } from "react-router-dom";
 import Stack from "@mui/material/Stack";
-import IconButton from "@mui/material/IconButton";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -22,7 +21,6 @@ import { useGetConfigurationQuery } from "src/store/slices/configuration";
 import { MEDIA_TYPE } from "src/types/Common";
 import { useGetGenresQuery } from "src/store/slices/genre";
 import { MAIN_PATH } from "src/constant";
-import { useNavigate } from "react-router-dom";
 
 interface VideoCardModalProps {
   video: Movie;
@@ -37,33 +35,30 @@ export default function VideoCardModal({
 
   const { data: configuration } = useGetConfigurationQuery(undefined);
   const { data: genres } = useGetGenresQuery(MEDIA_TYPE.Movie);
-  const { setPortal } = usePortal();
+  const setPortal = usePortal();
   const rect = anchorElement.getBoundingClientRect();
   const { setDetailType } = useDetailModal();
 
   return (
     <Card
-      onMouseLeave={() => {
-        // console.log("Mouse out");
+      onPointerLeave={() => {
         setPortal(null, null);
       }}
       sx={{
         width: rect.width * 1.5,
-        // height: rect.height * 2.5,
         height: "100%",
       }}
     >
-      <Box
-        sx={{
+      <div
+        style={{
           width: "100%",
           position: "relative",
           paddingTop: "calc(9 / 16 * 100%)",
         }}
       >
-        <Box
-          component="img"
+        <img
           src={`${configuration?.images.base_url}w780${video.backdrop_path}`}
-          sx={{
+          style={{
             top: 0,
             height: "100%",
             objectFit: "cover",
@@ -71,16 +66,18 @@ export default function VideoCardModal({
             backgroundPosition: "50%",
           }}
         />
-        <Stack
-          direction="row"
-          alignItems="center"
-          sx={{
-            position: "absolute",
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
             left: 0,
             right: 0,
             bottom: 0,
-            px: 2,
-            pb: 0.5,
+            paddingLeft: "16px",
+            paddingRight: "16px",
+            paddingBottom: "4px",
+            position: "absolute",
           }}
         >
           <MaxLineTypography
@@ -90,38 +87,26 @@ export default function VideoCardModal({
           >
             {video.title}
           </MaxLineTypography>
-          <Box flexGrow={1} />
-          <NetflixIconButton size="large">
+          <div style={{ flexGrow: 1 }} />
+          <NetflixIconButton>
             <VolumeUpIcon />
           </NetflixIconButton>
-        </Stack>
-      </Box>
+        </div>
+      </div>
       <CardContent>
         <Stack spacing={1}>
           <Stack direction="row" spacing={1}>
-            <IconButton
-              size="large"
-              sx={{
-                p: 0,
-                color: "white",
-                height: { xs: 36, sm: 40 },
-                "& > svg": {
-                  fontSize: { xs: 36, sm: 40 },
-                },
-              }}
-              onClick={() => navigate(`/${MAIN_PATH.watch}`)}
-            >
+            <NetflixIconButton onClick={() => navigate(`/${MAIN_PATH.watch}`)}>
               <PlayCircleIcon />
-            </IconButton>
-            <NetflixIconButton size="large">
+            </NetflixIconButton>
+            <NetflixIconButton>
               <AddIcon />
             </NetflixIconButton>
-            <NetflixIconButton size="large">
+            <NetflixIconButton>
               <ThumbUpOffAltIcon />
             </NetflixIconButton>
-            <Box flexGrow={1} />
+            <div style={{ flexGrow: 1 }} />
             <NetflixIconButton
-              size="large"
               onClick={() => {
                 setDetailType({ mediaType: MEDIA_TYPE.Movie, id: video.id });
               }}

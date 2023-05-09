@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import Box from "@mui/material/Box";
 import Portal from "@mui/material/Portal";
+
 import VideoCardPortal from "./VideoCardPortal";
 import MotionContainer from "./animate/MotionContainer";
 import {
@@ -9,18 +9,19 @@ import {
   varZoomInLeft,
   varZoomInRight,
 } from "./animate/variants/zoom/ZoomIn";
-import { usePortal } from "src/providers/PortalProvider";
+import { usePortalData } from "src/providers/PortalProvider";
 
 export default function VideoPortalContainer() {
-  const { miniModalMediaData, anchorElement } = usePortal();
+  const { miniModalMediaData, anchorElement } = usePortalData();
   const container = useRef(null);
   const rect = anchorElement?.getBoundingClientRect();
 
+  const hasToRender = !!miniModalMediaData && !!anchorElement;
   let isFirstElement = false;
   let isLastElement = false;
   let variant = varZoomIn;
-  if (anchorElement) {
-    const parentElement = anchorElement?.closest(".slick-active");
+  if (hasToRender) {
+    const parentElement = anchorElement.closest(".slick-active");
     const nextSiblingOfParentElement = parentElement?.nextElementSibling;
     const previousSiblingOfParentElement =
       parentElement?.previousElementSibling;
@@ -37,20 +38,19 @@ export default function VideoPortalContainer() {
 
   return (
     <>
-      {miniModalMediaData && anchorElement !== null ? (
+      {hasToRender && (
         <Portal container={container.current}>
           <VideoCardPortal
             video={miniModalMediaData}
             anchorElement={anchorElement}
           />
         </Portal>
-      ) : null}
-      <MotionContainer open={anchorElement !== null} initial="initial">
-        <Box
+      )}
+      <MotionContainer open={hasToRender} initial="initial">
+        <motion.div
           ref={container}
-          component={motion.div}
           variants={variant}
-          sx={{
+          style={{
             zIndex: 1,
             position: "absolute",
             display: "inline-block",
