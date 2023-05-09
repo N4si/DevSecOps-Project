@@ -2,7 +2,6 @@ import { Navigate, createBrowserRouter } from "react-router-dom";
 import { MAIN_PATH } from "src/constant";
 
 import MainLayout from "src/layouts/MainLayout";
-// import {loader as mainLoader} from 'src/pages/HomePage';
 
 const router = createBrowserRouter([
   {
