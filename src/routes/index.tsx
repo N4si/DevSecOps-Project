@@ -22,10 +22,6 @@ const router = createBrowserRouter([
           {
             path: ":genreId",
             lazy: () => import("src/pages/GenreExplore"),
-            loader: async () => {
-              const { loader: mainLoader } = await import("src/pages/HomePage");
-              return mainLoader();
-            },
           },
         ],
       },
