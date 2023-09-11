@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: netflix-app
+  labels:
+    app: netflix-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: netflix-app
+  template:
+    metadata:
+      labels:
+        app: netflix-app
+    spec:
+      containers:
+      - name: netflix-app
+        image: sevenajay/netflix:latest
+        ports:
+        - containerPort: 80
