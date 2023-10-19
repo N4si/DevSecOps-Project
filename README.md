@@ -53,7 +53,8 @@
     docker stop <containerid>
     docker rmi -f netflix
     ```
-    
+
+It will show an error cause you need API key
 
 **Step 4: Get the API Key:**
 
@@ -65,8 +66,10 @@
 - Provide the required basic details and click "Submit."
 - You will receive your TMDB API key.
 
-Now recreate the Docker image with your api key
+Now recreate the Docker image with your api key:
+```
 docker build --build-arg TMDB_V3_API_KEY=<your-api-key> -t netflix .
+```
 
 **Phase 2: Security**
 
@@ -74,21 +77,29 @@ docker build --build-arg TMDB_V3_API_KEY=<your-api-key> -t netflix .
     - Install SonarQube and Trivy on the EC2 instance to scan for vulnerabilities.
         
         sonarqube
+        ```
         docker run -d --name sonar -p 9000:9000 sonarqube:lts-community
+        ```
         
-        To access: publicIP:9000 (by default username & password is admin)
+        
+        To access: 
+        
+        publicIP:9000 (by default username & password is admin)
         
         To install Trivy:
-        
+        ```
         sudo apt-get install wget apt-transport-https gnupg lsb-release
         wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
         echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
         sudo apt-get update
-        sudo apt-get install trivy
+        sudo apt-get install trivy        
+        ```
         
-        to scan
-        
+        to scan image using trivy
+        ```
         trivy image <imageid>
+        ```
+        
         
 2. **Integrate SonarQube and Configure:**
     - Integrate SonarQube with your CI/CD pipeline.
@@ -308,7 +319,7 @@ pipeline{
             steps{
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){   
-                       sh "docker build --build-arg TMDB_V3_API_KEY=AJ7AYe14eca3e76864yah319b92 -t netflix ."
+                       sh "docker build --build-arg TMDB_V3_API_KEY=<yourapikey> -t netflix ."
                        sh "docker tag netflix nasi101/netflix:latest "
                        sh "docker push nasi101/netflix:latest "
                     }
@@ -350,6 +361,7 @@ pipeline{
    ```bash
    tar -xvf prometheus-2.47.1.linux-amd64.tar.gz
    cd prometheus-2.47.1.linux-amd64/
+   sudo mkdir -p /data /etc/prometheus
    sudo mv prometheus promtool /usr/local/bin/
    sudo mv consoles/ console_libraries/ /etc/prometheus/
    sudo mv prometheus.yml /etc/prometheus/prometheus.yml
