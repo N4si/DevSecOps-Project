@@ -703,12 +703,14 @@ Add a Job to Scrape Metrics on nodeip:9001/metrics in prometheus.yml:
 
 Update your Prometheus configuration (prometheus.yml) to add a new job for scraping metrics from nodeip:9001/metrics. You can do this by adding the following configuration to your prometheus.yml file:
 
-yaml
-Copy code
-scrape_configs:
-  - job_name: 'your-job-name'  # Replace 'your-job-name' with a meaningful name
+
+```
+  - job_name: 'Netflix'
+    metrics_path: '/metrics'
     static_configs:
-      - targets: ['nodeip:9001']
+      - targets: ['node1Ip:9100']
+```
+
 Replace 'your-job-name' with a descriptive name for your job. The static_configs section specifies the targets to scrape metrics from, and in this case, it's set to nodeip:9001.
 
 Don't forget to reload or restart Prometheus to apply these changes to your configuration.
