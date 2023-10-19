@@ -655,15 +655,64 @@ That's it! You've successfully installed and set up Grafana to work with Prometh
 2. **Configure Prometheus Plugin Integration:**
     - Integrate Jenkins with Prometheus to monitor the CI/CD pipeline.
 
+
 **Phase 5: Notification**
 
 1. **Implement Notification Services:**
     - Set up email notifications in Jenkins or other notification mechanisms.
 
-**Phase 6: Kubernetes**
+# Phase 6: Kubernetes
 
-1. **Kubernetes Setup (Master and Slave) on Ubuntu 20.04:**
-    - Configure your Kubernetes cluster for scalability and ease of management.
+## Create Kubernetes Cluster with Nodegroups
+
+In this phase, you'll set up a Kubernetes cluster with node groups. This will provide a scalable environment to deploy and manage your applications.
+
+## Monitor Kubernetes with Prometheus
+
+Prometheus is a powerful monitoring and alerting toolkit, and you'll use it to monitor your Kubernetes cluster. Additionally, you'll install the node exporter using Helm to collect metrics from your cluster nodes.
+
+### Install Node Exporter using Helm
+
+To begin monitoring your Kubernetes cluster, you'll install the Prometheus Node Exporter. This component allows you to collect system-level metrics from your cluster nodes. Here are the steps to install the Node Exporter using Helm:
+
+1. Add the Prometheus Community Helm repository:
+
+    ```bash
+    helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+    ```
+
+2. Uninstall the Node Exporter if it's already installed to ensure a clean setup:
+
+    ```bash
+    helm uninstall prometheus-node-exporter prometheus-community/prometheus-node-exporter --namespace prometheus-node-exporter
+    ```
+
+3. Create a Kubernetes namespace for the Node Exporter:
+
+    ```bash
+    kubectl create namespace prometheus-node-exporter
+    ```
+
+4. Install the Node Exporter using Helm:
+
+    ```bash
+    helm install prometheus-node-exporter prometheus-community/prometheus-node-exporter --namespace prometheus-node-exporter
+    ```
+
+Add a Job to Scrape Metrics on nodeip:9001/metrics in prometheus.yml:
+
+Update your Prometheus configuration (prometheus.yml) to add a new job for scraping metrics from nodeip:9001/metrics. You can do this by adding the following configuration to your prometheus.yml file:
+
+yaml
+Copy code
+scrape_configs:
+  - job_name: 'your-job-name'  # Replace 'your-job-name' with a meaningful name
+    static_configs:
+      - targets: ['nodeip:9001']
+Replace 'your-job-name' with a descriptive name for your job. The static_configs section specifies the targets to scrape metrics from, and in this case, it's set to nodeip:9001.
+
+Don't forget to reload or restart Prometheus to apply these changes to your configuration.
+
 
 **Phase 7: Cleanup**
 
