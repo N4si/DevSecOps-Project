@@ -1,4 +1,5 @@
 <div align="center">
+  <img src="./public/assets/DevSecOps.png" alt="Logo" width="100%" height="100%">
   <a href="http://netflix-clone-with-tmdb-using-react-mui.vercel.app/">
     <img src="./public/assets/netflix-logo.png" alt="Logo" width="100" height="32">
   </a>
@@ -191,7 +192,7 @@ pipeline {
         }
         stage('Checkout from Git') {
             steps {
-                git branch: 'main', url: 'https://github.com/Aj7Ay/Netflix-clone.git'
+                git branch: 'main', url: 'https://github.com/N4si/DevSecOps-Project.git'
             }
         }
         stage("Sonarqube Analysis") {
@@ -281,7 +282,7 @@ pipeline{
         }
         stage('Checkout from Git'){
             steps{
-                git branch: 'main', url: 'https://github.com/Aj7Ay/Netflix-clone.git'
+                git branch: 'main', url: 'https://github.com/N4si/DevSecOps-Project.git'
             }
         }
         stage("Sonarqube Analysis "){
@@ -338,6 +339,14 @@ pipeline{
         }
     }
 }
+
+
+If you get docker login failed errorr
+
+sudo su
+sudo usermod -aG docker jenkins
+sudo systemctl restart jenkins
+
 
 ```
 
@@ -709,6 +718,27 @@ Replace 'your-job-name' with a descriptive name for your job. The static_configs
 
 Don't forget to reload or restart Prometheus to apply these changes to your configuration.
 
+To deploy an application with ArgoCD, you can follow these steps, which I'll outline in Markdown format:
+
+### Deploy Application with ArgoCD
+
+1. **Install ArgoCD:**
+
+   You can install ArgoCD on your Kubernetes cluster by following the instructions provided in the [EKS Workshop](https://archive.eksworkshop.com/intermediate/290_argocd/install/) documentation.
+
+2. **Set Your GitHub Repository as a Source:**
+
+   After installing ArgoCD, you need to set up your GitHub repository as a source for your application deployment. This typically involves configuring the connection to your repository and defining the source for your ArgoCD application. The specific steps will depend on your setup and requirements.
+
+3. **Create an ArgoCD Application:**
+   - `name`: Set the name for your application.
+   - `destination`: Define the destination where your application should be deployed.
+   - `project`: Specify the project the application belongs to.
+   - `source`: Set the source of your application, including the GitHub repository URL, revision, and the path to the application within the repository.
+   - `syncPolicy`: Configure the sync policy, including automatic syncing, pruning, and self-healing.
+
+4. **Access your Application**
+   - To Access the app make sure port 30007 is open in your security group and then open a new tab paste your NodeIP:30007, your app should be running.
 
 **Phase 7: Cleanup**
 
