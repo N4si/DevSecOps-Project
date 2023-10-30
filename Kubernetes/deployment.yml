@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: netflix-app
-        image: nasi101/netflix:latest
+        image: haydenpal2003/netflix:latest
         ports:
         - containerPort: 80
