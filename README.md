@@ -126,9 +126,11 @@ docker build --build-arg TMDB_V3_API_KEY=<your-api-key> -t netflix .
     sudo apt update
     sudo apt install fontconfig openjdk-17-jre
     java -version
-    openjdk version "17.0.8" 2023-07-18
-    OpenJDK Runtime Environment (build 17.0.8+7-Debian-1deb12u1)
-    OpenJDK 64-Bit Server VM (build 17.0.8+7-Debian-1deb12u1, mixed mode, sharing)
+
+
+    #openjdk version "17.0.8" 2023-07-18
+    #OpenJDK Runtime Environment (build 17.0.8+7-Debian-1deb12u1)
+    #OpenJDK 64-Bit Server VM (build 17.0.8+7-Debian-1deb12u1, mixed mode, sharing)
     
     #jenkins
     sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
@@ -353,13 +355,13 @@ pipeline{
 }
 
 
-If you get docker login failed errorr
+```
 
+If you get docker login failed errorr
+```bash
 sudo su
 sudo usermod -aG docker jenkins
 sudo systemctl restart jenkins
-
-
 ```
 
 **Phase 4: Monitoring**
