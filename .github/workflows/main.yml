@@ -1,0 +1,80 @@
+name: Build React Application
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Java JDK 17
+      uses: actions/setup-java@v2
+      with: 
+        distribution: 'temurin'
+        java-version: 17
+
+   # - name: Set up JDK
+    #  run: |
+     #   sudo apt-get update
+      #  sudo apt-get install -y openjdk-17-jdk
+       # echo "export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> $GITHUB_ENV
+        #echo "export PATH=$JAVA_HOME/bin:$PATH" >> $GITHUB_ENV
+   
+    - name: SonarQube Analysis
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+    - uses: sonarsource/sonarqube-scan-action@master
+      env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      # If you wish to fail your job when the Quality Gate is red, uncomment the
+      # following lines. This would typically be used to fail a deployment.
+      # - uses: sonarsource/sonarqube-quality-gate-action@master
+      #   timeout-minutes: 5
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   
+
+    - name: Use Node.js 16
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16
+
+    - name: npm install and build
+      run: |
+        npm install
+        npm run build --if-present
+        npm audit fix
+        
+    - name: Run Dependency Check
+      run: |
+        sudo apt update
+        npm install -g yarn
+        sudo npm install -g yarn
+        sudo yarn install --force
+        sudo yarn audit --json
+        wget https://github.com/jeremylong/DependencyCheck/releases/download/v7.0.0/dependency-check-7.0.0-release.zip
+        unzip dependency-check-7.0.0-release.zip
+        cd dependency-check/bin
+        ./dependency-check.sh --scan /home/runner/work/DevSecOps-Project/DevSecOps-Project
+   # - name: Depcheck
+  #    uses: dependency-check/Dependency-Check_Action@main
+   #   env:
+   #     JAVA_HOME: /opt/jdk
+   #   id: Depcheck
+   #   with:
+   #       project: 'DevSecOps-Project'
+   #       path: '.'
+   #       format: 'HTML'
+   #       out: 'reports' # this is the default, no need to specify unless you wish to override it
+   #       args: >
+   #         --failOnCVSS 7
+   #         --enableRetired
+   # - name: Upload Test results
+   #   uses: actions/upload-artifact@master
+   #   with:
+   #        name: Depcheck report
+  #         path: ${{github.workspace}}/reports
