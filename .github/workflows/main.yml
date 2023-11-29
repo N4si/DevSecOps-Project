@@ -21,8 +21,8 @@ jobs:
         fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
     - uses: kitabisa/sonarqube-action@v1.2.1
       env:
-          login: ${{ secrets.SONAR_TOKEN }}
           host: ${{ secrets.SONAR_HOST_URL }}
+          login: ${{ secrets.SONAR_TOKEN }}
           projectKey: ${{ secrets.SONAR_PROJECT_KEY }}
           
 
