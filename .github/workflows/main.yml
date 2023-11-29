@@ -15,18 +15,6 @@ jobs:
         java-version: 17
 
   
-    - name: SonarQube Scan
-      run: |
-            -Dsonar.projectKey=$SONAR_PROJECT_KEY \
-            -Dsonar.organization=DevSecOps \
-            -Dsonar.host.url=http://20.204.3.28:9000/ \
-            -Dsonar.login=$SONAR_TOKEN
-      env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
-
     - name: SonarQube Analysis
       uses: actions/checkout@v2
       with:
