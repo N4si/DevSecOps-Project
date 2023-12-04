@@ -5,7 +5,7 @@
 
 **Step 1: Launch EC2 (Ubuntu 22.04):**
 
-- Provision an EC2 instance on AWS with Ubuntu 22.04.
+- Provision an EC2 instance on Azure with Ubuntu 22.04.
 - Connect to the instance using SSH.
 
 **Step 2: Clone the Code:**
@@ -731,5 +731,5 @@ To deploy an application with ArgoCD, you can follow these steps, which I'll out
 
 **Phase 7: Cleanup**
 
-1. **Cleanup AWS EC2 Instances:**
-    - Terminate AWS EC2 instances that are no longer needed.
+1. **Cleanup Azure EC2 Instances:**
+    - Terminate Azure EC2 instances that are no longer needed.
