@@ -1,2 +1,2 @@
 test file
-Add one line
+Add one line ... Yes, added
