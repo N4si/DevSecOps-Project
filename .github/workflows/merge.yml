@@ -1,0 +1,45 @@
+name: On Merge to master
+on:
+    pull_request:
+     branches:
+      - main
+     types:
+     - closed
+
+jobs:
+     
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check if master branch is updated
+      if: github.event.name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && github_event.pull_request.base.ref == 'main'
+    - name: Java JDK 17
+      uses: actions/setup-java@v2
+      with: 
+        distribution: 'temurin'
+        java-version: 17
+
+
+
+    - name: Use Node.js 16
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16
+
+    - name: npm install and build
+      run: |
+        npm install
+        npm run build --if-present
+        npm audit fix
+    
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+      with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
