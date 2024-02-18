@@ -15,10 +15,11 @@
 </div>
 
 # **Youtube Video for step by step Demonstration!**
+
 [![Video Tutorial](https://img.youtube.com/vi/g8X5AoqCJHc/0.jpg)](https://youtu.be/g8X5AoqCJHc)
 
-
 ## Susbcribe:
+
 [https://www.youtube.com/@cloudchamp?
 ](https://www.youtube.com/@cloudchamp?sub_confirmation=1)
 
@@ -35,35 +36,30 @@
 
 - Update all the packages and then clone the code.
 - Clone your application's code repository onto the EC2 instance:
-    
-    ```bash
-    git clone https://github.com/N4si/DevSecOps-Project.git
-    ```
-    
+  ```bash
+  git clone https://github.com/N4si/DevSecOps-Project.git
+  ```
 
 **Step 3: Install Docker and Run the App Using a Container:**
 
 - Set up Docker on the EC2 instance:
-    
-    ```bash
-    
-    sudo apt-get update
-    sudo apt-get install docker.io -y
-    sudo usermod -aG docker $USER  # Replace with your system's username, e.g., 'ubuntu'
-    newgrp docker
-    sudo chmod 777 /var/run/docker.sock
-    ```
-    
+  ```bash
+
+  sudo apt-get update
+  sudo apt-get install docker.io -y
+  sudo usermod -aG docker $USER  # Replace with your system's username, e.g., 'ubuntu'
+  newgrp docker
+  sudo chmod 777 /var/run/docker.sock
+  ```
 - Build and run your application using Docker containers:
-    
-    ```bash
-    docker build -t netflix .
-    docker run -d --name netflix -p 8081:80 netflix:latest
-    
-    #to delete
-    docker stop <containerid>
-    docker rmi -f netflix
-    ```
+  ```bash
+  docker build -t netflix .
+  docker run -d --name netflix -p 8081:80 netflix:latest
+
+  #to delete
+  docker stop <containerid>
+  docker rmi -f netflix
+  ```
 
 It will show an error cause you need API key
 
@@ -78,6 +74,7 @@ It will show an error cause you need API key
 - You will receive your TMDB API key.
 
 Now recreate the Docker image with your api key:
+
 ```
 docker build --build-arg TMDB_V3_API_KEY=<your-api-key> -t netflix .
 ```
@@ -85,67 +82,59 @@ docker build --build-arg TMDB_V3_API_KEY=<your-api-key> -t netflix .
 **Phase 2: Security**
 
 1. **Install SonarQube and Trivy:**
-    - Install SonarQube and Trivy on the EC2 instance to scan for vulnerabilities.
-        
-        sonarqube
-        ```
-        docker run -d --name sonar -p 9000:9000 sonarqube:lts-community
-        ```
-        
-        
-        To access: 
-        
-        publicIP:9000 (by default username & password is admin)
-        
-        To install Trivy:
-        ```
-        sudo apt-get install wget apt-transport-https gnupg lsb-release
-        wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
-        echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
-        sudo apt-get update
-        sudo apt-get install trivy        
-        ```
-        
-        to scan image using trivy
-        ```
-        trivy image <imageid>
-        ```
-        
-        
+   - Install SonarQube and Trivy on the EC2 instance to scan for vulnerabilities.
+     sonarqube
+     ```
+     docker run -d --name sonar -p 9000:9000 sonarqube:lts-community
+     ```
+     To access:
+     publicIP:9000 (by default username & password is admin)
+     To install Trivy:
+     ```
+     sudo apt-get install wget apt-transport-https gnupg lsb-release
+     wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+     echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
+     sudo apt-get update
+     sudo apt-get install trivy
+     ```
+     to scan image using trivy
+     ```
+     trivy image <imageid>
+     ```
 2. **Integrate SonarQube and Configure:**
-    - Integrate SonarQube with your CI/CD pipeline.
-    - Configure SonarQube to analyze code for quality and security issues.
+   - Integrate SonarQube with your CI/CD pipeline.
+   - Configure SonarQube to analyze code for quality and security issues.
 
 **Phase 3: CI/CD Setup**
 
 1. **Install Jenkins for Automation:**
-    - Install Jenkins on the EC2 instance to automate deployment:
-    Install Java
-    
-    ```bash
-    sudo apt update
-    sudo apt install fontconfig openjdk-17-jre
-    java -version
-    openjdk version "17.0.8" 2023-07-18
-    OpenJDK Runtime Environment (build 17.0.8+7-Debian-1deb12u1)
-    OpenJDK 64-Bit Server VM (build 17.0.8+7-Debian-1deb12u1, mixed mode, sharing)
-    
-    #jenkins
-    sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
-    https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
-    echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
-    https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
-    /etc/apt/sources.list.d/jenkins.list > /dev/null
-    sudo apt-get update
-    sudo apt-get install jenkins
-    sudo systemctl start jenkins
-    sudo systemctl enable jenkins
-    ```
-    
-    - Access Jenkins in a web browser using the public IP of your EC2 instance.
-        
-        publicIp:8080
-        
+
+   - Install Jenkins on the EC2 instance to automate deployment:
+     Install Java
+
+   ```bash
+   sudo apt update
+   sudo apt install fontconfig openjdk-17-jre
+   java -version
+   openjdk version "17.0.8" 2023-07-18
+   OpenJDK Runtime Environment (build 17.0.8+7-Debian-1deb12u1)
+   OpenJDK 64-Bit Server VM (build 17.0.8+7-Debian-1deb12u1, mixed mode, sharing)
+
+   #jenkins
+   sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+   https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+   echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+   https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+   /etc/apt/sources.list.d/jenkins.list > /dev/null
+   sudo apt-get update
+   sudo apt-get install jenkins
+   sudo systemctl start jenkins
+   sudo systemctl enable jenkins
+   ```
+
+   - Access Jenkins in a web browser using the public IP of your EC2 instance.
+     publicIp:8080
+
 2. **Install Necessary Plugins in Jenkins:**
 
 Goto Manage Jenkins →Plugins → Available Plugins →
@@ -163,7 +152,6 @@ Install below plugins
 ### **Configure Java and Nodejs in Global Tool Configuration**
 
 Goto Manage Jenkins → Tools → Install JDK(17) and NodeJs(16)→ Click on Apply and Save
-
 
 ### SonarQube
 
@@ -184,6 +172,7 @@ We will install a sonar scanner in the tools.
 Create a Jenkins webhook
 
 1. **Configure CI/CD Pipeline in Jenkins:**
+
 - Create a CI/CD pipeline in Jenkins to automate your application deployment.
 
 ```groovy
@@ -277,40 +266,40 @@ Now, you have installed the Dependency-Check plugin, configured the tool, and ad
 
 ```groovy
 
-pipeline{
+pipeline {
     agent any
-    tools{
+    tools {
         jdk 'jdk17'
         nodejs 'node16'
     }
     environment {
-        SCANNER_HOME=tool 'sonar-scanner'
+        SCANNER_HOME = tool 'sonar-scanner'
     }
     stages {
-        stage('clean workspace'){
-            steps{
+        stage('clean workspace') {
+            steps {
                 cleanWs()
             }
         }
-        stage('Checkout from Git'){
-            steps{
+        stage('Checkout from Git') {
+            steps {
                 git branch: 'main', url: 'https://github.com/N4si/DevSecOps-Project.git'
             }
         }
-        stage("Sonarqube Analysis "){
-            steps{
+        stage("Sonarqube Analysis ") {
+            steps {
                 withSonarQubeEnv('sonar-server') {
                     sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Netflix \
                     -Dsonar.projectKey=Netflix '''
                 }
             }
         }
-        stage("quality gate"){
-           steps {
+        stage("quality gate") {
+            steps {
                 script {
-                    waitForQualityGate abortPipeline: false, credentialsId: 'Sonar-token' 
+                    waitForQualityGate abortPipeline: false, credentialsId: 'Sonar-token'
                 }
-            } 
+            }
         }
         stage('Install Dependencies') {
             steps {
@@ -328,24 +317,50 @@ pipeline{
                 sh "trivy fs . > trivyfs.txt"
             }
         }
-        stage("Docker Build & Push"){
-            steps{
-                script{
-                   withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){   
-                       sh "docker build --build-arg TMDB_V3_API_KEY=<yourapikey> -t netflix ."
-                       sh "docker tag netflix nasi101/netflix:latest "
-                       sh "docker push nasi101/netflix:latest "
+        stage("Docker Build & Push") {
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
+                        sh "docker build --build-arg TMDB_V3_API_KEY=<yourapikey> -t netflix ."
+                        sh "docker tag netflix nasi101/netflix:latest "
+                        sh "docker push nasi101/netflix:latest "
                     }
                 }
             }
         }
-        stage("TRIVY"){
-            steps{
-                sh "trivy image nasi101/netflix:latest > trivyimage.txt" 
+        stage("TRIVY") {
+            steps {
+                sh "trivy image nasi101/netflix:latest > trivyimage.txt"
             }
         }
-        stage('Deploy to container'){
-            steps{
+        stage('Stop and Remove Containers') {
+            steps {
+                script {
+                    sh '''
+                        docker ps -a | grep "netflix:latest" | awk '{print $1}' > containerid.txt
+
+                        # Check if the containerid.txt file exists and is not empty
+                        if [ -s "containerid.txt" ]; then
+                            # Read the contents of containerid.txt line by line and stop each container
+                            while read -r container_id; do
+                                docker stop "$container_id"
+                            done < containerid.txt
+
+                            # Read the contents of containerid.txt line by line and remove each container
+                            while read -r container_id; do
+                                docker rm "$container_id"
+                            done < containerid.txt
+                        else
+                            echo "No containers found for nasi101/netflix:latest"
+                        fi
+
+                        rm -rf containerid.txt
+                    '''
+                }
+            }
+        }
+        stage('Deploy to container') {
+            steps {
                 sh 'docker run -d --name netflix -p 8081:80 nasi101/netflix:latest'
             }
         }
@@ -532,14 +547,14 @@ sudo systemctl restart jenkins
      scrape_interval: 15s
 
    scrape_configs:
-     - job_name: 'node_exporter'
+     - job_name: "node_exporter"
        static_configs:
-         - targets: ['localhost:9100']
+         - targets: ["localhost:9100"]
 
-     - job_name: 'jenkins'
-       metrics_path: '/prometheus'
+     - job_name: "jenkins"
+       metrics_path: "/prometheus"
        static_configs:
-         - targets: ['<your-jenkins-ip>:<your-jenkins-port>']
+         - targets: ["<your-jenkins-ip>:<your-jenkins-port>"]
    ```
 
    Make sure to replace `<your-jenkins-ip>` and `<your-jenkins-port>` with the appropriate values for your Jenkins setup.
@@ -559,7 +574,6 @@ sudo systemctl restart jenkins
    You can access Prometheus targets at:
 
    `http://<your-prometheus-ip>:9090/targets`
-
 
 ####Grafana
 
@@ -674,13 +688,12 @@ Grafana is a powerful tool for creating visualizations and dashboards, and you c
 That's it! You've successfully installed and set up Grafana to work with Prometheus for monitoring and visualization.
 
 2. **Configure Prometheus Plugin Integration:**
-    - Integrate Jenkins with Prometheus to monitor the CI/CD pipeline.
-
+   - Integrate Jenkins with Prometheus to monitor the CI/CD pipeline.
 
 **Phase 5: Notification**
 
 1. **Implement Notification Services:**
-    - Set up email notifications in Jenkins or other notification mechanisms.
+   - Set up email notifications in Jenkins or other notification mechanisms.
 
 # Phase 6: Kubernetes
 
@@ -698,26 +711,25 @@ To begin monitoring your Kubernetes cluster, you'll install the Prometheus Node 
 
 1. Add the Prometheus Community Helm repository:
 
-    ```bash
-    helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-    ```
+   ```bash
+   helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+   ```
 
 2. Create a Kubernetes namespace for the Node Exporter:
 
-    ```bash
-    kubectl create namespace prometheus-node-exporter
-    ```
+   ```bash
+   kubectl create namespace prometheus-node-exporter
+   ```
 
 3. Install the Node Exporter using Helm:
 
-    ```bash
-    helm install prometheus-node-exporter prometheus-community/prometheus-node-exporter --namespace prometheus-node-exporter
-    ```
+   ```bash
+   helm install prometheus-node-exporter prometheus-community/prometheus-node-exporter --namespace prometheus-node-exporter
+   ```
 
 Add a Job to Scrape Metrics on nodeip:9001/metrics in prometheus.yml:
 
 Update your Prometheus configuration (prometheus.yml) to add a new job for scraping metrics from nodeip:9001/metrics. You can do this by adding the following configuration to your prometheus.yml file:
-
 
 ```
   - job_name: 'Netflix'
@@ -743,6 +755,7 @@ To deploy an application with ArgoCD, you can follow these steps, which I'll out
    After installing ArgoCD, you need to set up your GitHub repository as a source for your application deployment. This typically involves configuring the connection to your repository and defining the source for your ArgoCD application. The specific steps will depend on your setup and requirements.
 
 3. **Create an ArgoCD Application:**
+
    - `name`: Set the name for your application.
    - `destination`: Define the destination where your application should be deployed.
    - `project`: Specify the project the application belongs to.
@@ -755,4 +768,4 @@ To deploy an application with ArgoCD, you can follow these steps, which I'll out
 **Phase 7: Cleanup**
 
 1. **Cleanup AWS EC2 Instances:**
-    - Terminate AWS EC2 instances that are no longer needed.
+   - Terminate AWS EC2 instances that are no longer needed.
