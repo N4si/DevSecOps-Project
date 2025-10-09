@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./public/assets/DevSecOps.png" alt="Logo" width="100%" height="100%">
+  <img src="./public/assets/simple-archietcure.png" alt="Logo" width="100%" height="100%">
 
   <br>
   <a href="http://netflix-clone-with-tmdb-using-react-mui.vercel.app/">
@@ -10,12 +10,14 @@
 <br />
 
 <div align="center">
-  <img src="./public/assets/home-page.png" alt="Logo" width="100%" height="100%">
+  <img src="./public/assets/home.png" alt="Logo" width="100%" height="100%">
   <p align="center">Home Page</p>
 </div>
 
 # **Youtube Video for step by step Demonstration!**
 [![Video Tutorial](https://img.youtube.com/vi/g8X5AoqCJHc/0.jpg)](https://youtu.be/g8X5AoqCJHc)
+
+This is the video I followed ☝️☝️
 
 
 ## Susbcribe:
@@ -121,14 +123,13 @@ docker build --build-arg TMDB_V3_API_KEY=<your-api-key> -t netflix .
 1. **Install Jenkins for Automation:**
     - Install Jenkins on the EC2 instance to automate deployment:
     Install Java
-    
+    (I updated the code to the latest documentation)
     ```bash
-    sudo apt update
-    sudo apt install fontconfig openjdk-17-jre
+    sudo apt install fontconfig openjdk-21-jre
     java -version
-    openjdk version "17.0.8" 2023-07-18
-    OpenJDK Runtime Environment (build 17.0.8+7-Debian-1deb12u1)
-    OpenJDK 64-Bit Server VM (build 17.0.8+7-Debian-1deb12u1, mixed mode, sharing)
+    openjdk version "21.0.3" 2024-04-16
+    OpenJDK Runtime Environment (build 21.0.3+11-Debian-2)
+    OpenJDK 64-Bit Server VM (build 21.0.3+11-Debian-2, mixed mode, sharing)
     
     #jenkins
     sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
@@ -185,12 +186,13 @@ Create a Jenkins webhook
 
 1. **Configure CI/CD Pipeline in Jenkins:**
 - Create a CI/CD pipeline in Jenkins to automate your application deployment.
+(Important to keep the names same as mentioned below in the code to avoid any errors during build)
 
 ```groovy
 pipeline {
     agent any
     tools {
-        jdk 'jdk17'
+        jdk 'jdk21'
         nodejs 'node16'
     }
     environment {
@@ -280,7 +282,7 @@ Now, you have installed the Dependency-Check plugin, configured the tool, and ad
 pipeline{
     agent any
     tools{
-        jdk 'jdk17'
+        jdk 'jdk21'
         nodejs 'node16'
     }
     environment {
@@ -351,15 +353,14 @@ pipeline{
         }
     }
 }
+```
 
+   If you get docker login failed errorr
 
-If you get docker login failed errorr
-
+``` groovy
 sudo su
 sudo usermod -aG docker jenkins
 sudo systemctl restart jenkins
-
-
 ```
 
 **Phase 4: Monitoring**
@@ -756,3 +757,6 @@ To deploy an application with ArgoCD, you can follow these steps, which I'll out
 
 1. **Cleanup AWS EC2 Instances:**
     - Terminate AWS EC2 instances that are no longer needed.
+
+
+## Best of luck 👍👍
