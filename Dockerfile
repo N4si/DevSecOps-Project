@@ -14,4 +14,5 @@ WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 COPY --from=builder /app/dist .
 EXPOSE 80
+HEALTHCHECK --interval=30s --timeout=3s CMD curl -f http://localhost/ || exit 1
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
